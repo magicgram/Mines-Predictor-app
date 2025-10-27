@@ -10,6 +10,7 @@ const App: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [infoMessage, setInfoMessage] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState<boolean>(false);
     const [showTestPage, setShowTestPage] = useState<boolean>(false); // Add new state
 
@@ -42,13 +43,19 @@ const App: React.FC = () => {
     const handleLogin = async (userId: string) => {
         setIsLoading(true);
         setError(null);
+        setInfoMessage(null); // Reset on each attempt
         const result = await verificationService.verifyInitialLogin(userId);
         if (result.success) {
             const newUser: User = { id: userId, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.redepositCount || 0 };
             localStorage.setItem('minesPredictorUser', JSON.stringify(newUser));
             setUser(newUser);
         } else {
-            setError(result.message || "Login failed.");
+            // Check for the special "needs deposit" message from the API.
+            if (result.message && result.message.includes('successfully completed registration')) {
+                setInfoMessage(result.message); // Set the info message
+            } else {
+                setError(result.message || "Login failed."); // It's a real error
+            }
         }
         setIsLoading(false);
     };
@@ -110,7 +117,7 @@ const App: React.FC = () => {
             
             <main>
                 {!user ? (
-                    <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} />
+                    <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
                 ) : (
                     <PredictorPage user={user} onUpdateUser={updateUser} />
                 )}

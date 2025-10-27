@@ -4,6 +4,7 @@ interface LoginPageProps {
     onLogin: (userId: string) => void;
     error: string | null;
     isLoading: boolean;
+    infoMessage: string | null;
 }
 
 // IMPORTANT: Set your affiliate link in the Vercel Environment Variables.
@@ -12,7 +13,7 @@ interface LoginPageProps {
 // @ts-ignore
 const AFFILIATE_LINK = import.meta.env.VITE_AFFILIATE_LINK || 'https://1waff.com/?p=YOUR_CODE_HERE';
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMessage }) => {
     const [userId, setUserId] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -42,7 +43,27 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
                             required
                         />
                     </div>
+
+                    {infoMessage && (
+                        <div className="p-4 bg-gray-700/50 border border-purple-400 rounded-lg text-sm space-y-3">
+                            {infoMessage.split('\n').map((line, index) => {
+                                const trimmedLine = line.trim();
+                                const firstSpaceIndex = trimmedLine.indexOf(' ');
+                                const icon = trimmedLine.substring(0, firstSpaceIndex);
+                                const text = trimmedLine.substring(firstSpaceIndex + 1);
+
+                                return (
+                                    <div key={index} className="flex items-start">
+                                        <span className="mr-3 text-lg">{icon}</span>
+                                        <p className="text-gray-200 flex-1">{text}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+
                     {error && <p className="text-red-400 text-sm text-center whitespace-pre-wrap">{error}</p>}
+
                     <div>
                         <button
                             type="submit"

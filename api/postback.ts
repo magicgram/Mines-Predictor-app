@@ -15,6 +15,13 @@ interface UserData {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Add check for KV store configuration
+  if (!process.env.KV_URL) {
+    return res.status(500).json({ 
+        message: "KV Database is not connected. Please go to the Storage tab in your Vercel project and connect a KV store." 
+    });
+  }
+
   // We only accept GET requests as per 1Win postback standard
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
@@ -72,6 +79,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error) {
     console.error('Postback processing error:', error);
     // Send a 500 error if something goes wrong on our end.
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error processing postback. Check server logs.' });
   }
 }

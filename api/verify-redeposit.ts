@@ -8,6 +8,14 @@ interface UserData {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Add check for KV store configuration
+  if (!process.env.KV_URL) {
+    return res.status(500).json({ 
+        success: false,
+        message: "KV Database is not connected. Please go to the Storage tab in your Vercel project and connect a KV store." 
+    });
+  }
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -43,6 +51,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   } catch (error) {
     console.error('Redeposit verification error:', error);
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+    res.status(500).json({ success: false, message: 'Internal Server Error during re-deposit check. Check server logs.' });
   }
 }

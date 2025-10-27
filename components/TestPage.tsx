@@ -26,22 +26,25 @@ const TestPage: React.FC = () => {
                 throw new Error(data.message || `Request failed with status ${response.status}`);
             }
 
-            setResponseMessage(`Success! Server responded:\n${JSON.stringify(data, null, 2)}`);
+            setResponseMessage(`✅ Success! Server responded:\n${JSON.stringify(data, null, 2)}`);
         } catch (err: any) {
-            setError(err.message);
+            setError(`❌ Error: ${err.message}`);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-center text-yellow-400 mb-2">Postback Testing Tool</h2>
-            <p className="text-gray-400 text-center mb-6">
-                Use this tool to simulate postbacks from 1Win to verify your backend is working. After a successful deposit test, try logging in with the same User ID.
-            </p>
+        <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
+            <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400 mb-2">
+                    Postback Testing Tool
+                </h2>
+                <p className="text-gray-400">Simulate 1Win postbacks to verify your backend. After a deposit test, log in with the same User ID.</p>
+            </div>
 
-            <div className="mb-4">
+
+            <div className="mb-6">
                 <label htmlFor="test-user-id" className="block text-sm font-medium text-gray-300 mb-2">
                     User ID to Test
                 </label>
@@ -51,7 +54,7 @@ const TestPage: React.FC = () => {
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                     placeholder="e.g., testuser123"
-                    className="w-full px-4 py-2 text-gray-200 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    className="w-full px-4 py-3 text-gray-200 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                 />
             </div>
 
@@ -59,45 +62,45 @@ const TestPage: React.FC = () => {
                 <button
                     onClick={() => handleTest({ status: 'registration' })}
                     disabled={isLoading}
-                    className="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-800 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-blue-600/80 rounded-lg hover:bg-blue-600 disabled:bg-gray-700 transition-colors"
                 >
                     Test Registration
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '10' })}
                     disabled={isLoading}
-                    className="px-4 py-2 font-semibold text-white bg-green-600 rounded-md hover:bg-green-700 disabled:bg-green-800 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-green-600/80 rounded-lg hover:bg-green-600 disabled:bg-gray-700 transition-colors"
                 >
-                    Test First Deposit ($10)
+                    Test 1st Deposit ($10)
                 </button>
                  <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '2' })}
                     disabled={isLoading}
-                    className="px-4 py-2 font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 disabled:bg-red-800 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-red-600/80 rounded-lg hover:bg-red-600 disabled:bg-gray-700 transition-colors"
                 >
                     Test Failed Deposit ($2)
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'dep', dep_sum_usd: '5' })}
                     disabled={isLoading}
-                    className="px-4 py-2 font-semibold text-white bg-purple-600 rounded-md hover:bg-purple-700 disabled:bg-purple-800 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-purple-600/80 rounded-lg hover:bg-purple-600 disabled:bg-gray-700 transition-colors"
                 >
                     Test Re-Deposit ($5)
                 </button>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 min-h-[100px]">
                 {isLoading && (
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center p-4">
                         <div className="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-yellow-500"></div>
-                        <p className="ml-3 text-gray-300">Sending test postback...</p>
+                        <p className="ml-4 text-gray-300">Sending test postback...</p>
                     </div>
                 )}
                 {responseMessage && (
-                     <pre className="p-4 bg-gray-900 text-green-300 rounded-md text-sm whitespace-pre-wrap">{responseMessage}</pre>
+                     <pre className="p-4 bg-gray-900/50 text-green-300 rounded-lg border border-green-500/30 text-sm whitespace-pre-wrap">{responseMessage}</pre>
                 )}
                 {error && (
-                    <pre className="p-4 bg-gray-900 text-red-400 rounded-md text-sm whitespace-pre-wrap">{`Error: ${error}`}</pre>
+                    <pre className="p-4 bg-gray-900/50 text-red-300 rounded-lg border border-red-500/30 text-sm whitespace-pre-wrap">{error}</pre>
                 )}
             </div>
         </div>

@@ -5,58 +5,61 @@ const PostbackGuide: React.FC = () => {
     const params = "?user_id={id}&status={status}&fdp_usd={fdp_usd}&dep_sum_usd={dep_sum_usd}";
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-center text-purple-400 mb-4">How to Set Up Your 1Win Affiliate Postback</h2>
-            <p className="text-gray-400 text-center mb-6">This guide explains how to connect your affiliate account to this app for user verification.</p>
+        <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
+            <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">
+                    1Win Affiliate Postback Setup
+                </h2>
+                <p className="text-gray-400">Connect your affiliate account to this app for automated user verification.</p>
+            </div>
             
-            <div className="space-y-6">
+            <div className="space-y-8">
                 <div>
-                    <h3 className="text-lg font-semibold text-white">Step 1: Deploy This Project to Vercel</h3>
-                    <p className="text-gray-300 mt-1">First, push all the project code to GitHub and deploy it to Vercel. After deploying, Vercel will give you a public URL, for example: <code className="text-yellow-300">https://your-project-name.vercel.app</code>. This is your base URL.</p>
+                    <h3 className="text-xl font-semibold text-white mb-2 border-l-4 border-purple-500 pl-4">Step 1: Deploy to Vercel</h3>
+                    <p className="text-gray-300 mt-1">First, deploy this project from your GitHub repository to Vercel. After deploying, Vercel provides a public URL (e.g., <code className="text-yellow-300 bg-black/20 px-1 rounded">your-project.vercel.app</code>). This is your base URL.</p>
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-semibold text-white">Step 2: Connect Vercel KV Database</h3>
-                    <p className="text-gray-300 mt-1">In your Vercel project dashboard, go to the "Storage" tab. Scroll down to "Marketplace Database Providers" and find <strong>Upstash</strong>. Click the dropdown/arrow next to it, then click <strong>Create</strong> next to the <strong>"Upstash for Redis"</strong> option. (Vercel KV is powered by Upstash). On the configuration screen, select a <strong>Primary Region</strong> (e.g., Mumbai `ap-south-1` for users in India) and click <strong>Continue</strong>. This will create and connect the database where user information is stored. It's a required step.</p>
+                    <h3 className="text-xl font-semibold text-white mb-2 border-l-4 border-purple-500 pl-4">Step 2: Connect Vercel KV Database</h3>
+                    <p className="text-gray-300 mt-1">In your Vercel project's "Storage" tab, find and create a new <strong>Vercel KV (powered by Upstash)</strong> database. Choose a region close to your users. This step is mandatory for storing user data.</p>
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-semibold text-white">Step 3: Set Environment Variables</h3>
+                    <h3 className="text-xl font-semibold text-white mb-2 border-l-4 border-purple-500 pl-4">Step 3: Set Environment Variables</h3>
                     <p className="text-gray-300 mt-1">
-                        In your Vercel project dashboard, go to the "Settings" tab and then click on "Environment Variables". You must add your affiliate link here so the application knows where to send users.
+                        In your Vercel project's "Settings" → "Environment Variables", you must add your affiliate link.
                     </p>
-                    <ul className="list-disc list-inside text-gray-300 mt-2 space-y-1 text-sm bg-gray-900 p-3 rounded-md">
-                        <li>Create a new variable with the name: <code className="text-yellow-300">VITE_AFFILIATE_LINK</code></li>
-                        <li>Set the value to your full 1Win affiliate link, for example: <code className="text-yellow-300">https://1waff.com/?p=YOUR_CODE</code></li>
-                        <li>Ensure the variable is available on all environments (Production, Preview, and Development).</li>
-                    </ul>
-                     <p className="text-gray-400 text-xs mt-2">
-                        This is a critical step. If this variable is not set, the registration and deposit links will not work correctly.
-                    </p>
+                    <div className="mt-3 bg-gray-900/50 p-4 rounded-lg border border-gray-700">
+                        <p className="font-mono text-sm">
+                            <span className="text-cyan-400">VITE_AFFILIATE_LINK</span>=<span className="text-yellow-400">"https://1waff.com/?p=YOUR_CODE"</span>
+                        </p>
+                        <p className="text-gray-400 text-xs mt-2">
+                            This is critical. If not set, registration and deposit links will fail.
+                        </p>
+                    </div>
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-semibold text-white">Step 4: Create the Postback URL</h3>
-                    <p className="text-gray-300 mt-1">Your backend is now live. The postback URL is your Vercel URL plus the API endpoint path. In your 1Win affiliate dashboard, go to the Postback/S2S settings and use the following URL for events like "First Deposit" and "Repeated Deposit":</p>
-                    <code className="block bg-gray-900 p-3 rounded-md mt-2 text-sm text-yellow-300 break-all">
-                        {'[Your Vercel URL]'}
-                        {postbackEndpoint}
-                        {params}
+                    <h3 className="text-xl font-semibold text-white mb-2 border-l-4 border-purple-500 pl-4">Step 4: Create the Postback URL</h3>
+                    <p className="text-gray-300 mt-1">In your 1Win affiliate dashboard, go to the S2S settings and use the following URL for "First Deposit" and "Repeated Deposit" events:</p>
+                    <code className="block bg-gray-900/50 p-4 rounded-lg mt-3 text-sm text-yellow-300 break-all border border-gray-700">
+                        <span className="text-gray-400">[Your Vercel URL]</span>
+                        <span className="text-cyan-400">{postbackEndpoint}</span>
+                        <span className="text-purple-400">{params}</span>
                     </code>
                     <p className="text-gray-400 text-xs mt-2">
-                        Replace <code className="text-yellow-300">{'[Your Vercel URL]'}</code> with your actual URL from Step 1. For example: <br />
-                        <code className="text-yellow-300 break-all">https://your-project-name.vercel.app/api/postback?user_id=...</code>
+                        Replace <code className="text-yellow-300 bg-black/20 px-1 rounded">{'[Your Vercel URL]'}</code> with your actual URL from Step 1.
                     </p>
                 </div>
                 
                 <div>
-                    <h3 className="text-lg font-semibold text-white">Step 5: How It Works</h3>
-                    <ul className="list-disc list-inside text-gray-300 mt-2 space-y-2 text-sm">
-                        <li>When a user deposits through your link, 1Win sends data to your Vercel URL.</li>
-                        <li>Your backend code (<code className="text-yellow-300">/api/postback.ts</code>) saves this data to your Vercel KV database.</li>
-                         <li>Your backend checks if the first deposit (<code className="text-yellow-300">{`{fdp_usd}`}</code>) is at least $5.</li>
-                        <li>It also checks if repeated deposits (<code className="text-yellow-300">{`{dep_sum_usd}`}</code>) are at least $4.</li>
-                        <li>When the user enters their ID in this app, the app asks your backend, which checks the database to verify them.</li>
+                    <h3 className="text-xl font-semibold text-white mb-2 border-l-4 border-purple-500 pl-4">Step 5: How It Works</h3>
+                    <ul className="list-disc list-inside text-gray-300 mt-2 space-y-2 text-sm pl-2">
+                        <li>When a user deposits, 1Win sends data to your Vercel URL.</li>
+                        <li>Your backend (<code className="text-yellow-300 bg-black/20 px-1 rounded">/api/postback.ts</code>) saves this data to your Vercel KV database.</li>
+                        <li>The backend validates the first deposit (<code className="text-yellow-300 bg-black/20 px-1 rounded">{`{fdp_usd}`}</code>) is ≥ $5.</li>
+                        <li>It also validates repeated deposits (<code className="text-yellow-300 bg-black/20 px-1 rounded">{`{dep_sum_usd}`}</code>) are ≥ $4.</li>
+                        <li>The app then verifies the user's ID against the database to grant access.</li>
                     </ul>
                 </div>
             </div>

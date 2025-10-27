@@ -22,13 +22,12 @@ const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
     };
 
     return (
-        <div className="grid grid-cols-5 gap-2 aspect-square">
+        <div className="grid grid-cols-5 gap-2 aspect-square p-2 bg-black/20 rounded-lg">
             {gridState.map((state, index) => (
                 <div
                     key={index}
-                    className={`w-full h-full rounded-md flex items-center justify-center transition-all duration-300
-                    ${state === 'hidden' ? 'bg-gray-700' : 'bg-gray-600'}
-                    ${state === 'bomb' ? 'animate-pulse' : ''}
+                    className={`w-full h-full rounded-md flex items-center justify-center transition-all duration-300 transform
+                    ${state === 'hidden' ? 'bg-gray-900/50 hover:bg-purple-900/50 hover:scale-105 cursor-pointer shadow-inner' : 'bg-gray-700/50 scale-105'}
                     `}
                 >
                     {renderCellContent(state)}

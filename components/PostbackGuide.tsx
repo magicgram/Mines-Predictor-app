@@ -2,7 +2,7 @@ import React from 'react';
 
 const PostbackGuide: React.FC = () => {
     const postbackEndpoint = "/api/postback";
-    const params = "?user_id={id}&status={status}&fdp_usd={f_d_p_usd}&dep_sum_usd={dep_sum_usd}";
+    const params = "?user_id={id}&status={status}&fdp_usd={fdp_usd}&dep_sum_usd={dep_sum_usd}";
 
     return (
         <div className="w-full max-w-4xl mx-auto p-6 bg-gray-800 rounded-xl shadow-lg mb-8 border border-gray-700">
@@ -17,7 +17,7 @@ const PostbackGuide: React.FC = () => {
 
                 <div>
                     <h3 className="text-lg font-semibold text-white">Step 2: Connect Vercel KV Database</h3>
-                    <p className="text-gray-300 mt-1">In your Vercel project dashboard, go to the "Storage" tab. Select "KV (New)" and connect a new database to your project. This is where user deposit information will be stored. It's a required step.</p>
+                    <p className="text-gray-300 mt-1">In your Vercel project dashboard, go to the "Storage" tab. Scroll down to "Marketplace Database Providers" and find <strong>Upstash</strong>. Click the dropdown/arrow next to it, then click <strong>Create</strong> next to the <strong>"Upstash for Redis"</strong> option. (Vercel KV is powered by Upstash). On the configuration screen, select a <strong>Primary Region</strong> (e.g., Mumbai `ap-south-1` for users in India) and click <strong>Continue</strong>. This will create and connect the database where user information is stored. It's a required step.</p>
                 </div>
 
                 <div>

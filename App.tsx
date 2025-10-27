@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
 import PostbackGuide from './components/PostbackGuide';
+import TestPage from './components/TestPage'; // Import the new component
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 
@@ -10,6 +11,7 @@ const App: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState<boolean>(false);
+    const [showTestPage, setShowTestPage] = useState<boolean>(false); // Add new state
 
     const loadUserFromStorage = useCallback(async () => {
         const storedUser = localStorage.getItem('minesPredictorUser');
@@ -71,14 +73,26 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100 p-4">
-            <header className="flex justify-between items-center mb-4">
+            <header className="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h1 className="text-2xl font-bold text-purple-400">Mines Predictor Pro</h1>
-                <div>
+                <div className="flex items-center flex-wrap gap-2">
                      <button
-                        onClick={() => setShowGuide(!showGuide)}
-                        className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg mr-4 transition-colors"
+                        onClick={() => {
+                            setShowGuide(!showGuide);
+                            if (!showGuide) setShowTestPage(false); // Hide test page if showing guide
+                        }}
+                        className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
                     >
-                        {showGuide ? 'Hide' : 'Show'} Postback Guide
+                        {showGuide ? 'Hide Guide' : 'Show Guide'}
+                    </button>
+                    <button
+                        onClick={() => {
+                            setShowTestPage(!showTestPage);
+                             if (!showTestPage) setShowGuide(false); // Hide guide if showing test page
+                        }}
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                    >
+                        {showTestPage ? 'Hide Tester' : 'Test Postback'}
                     </button>
                     {user && (
                         <button
@@ -92,6 +106,7 @@ const App: React.FC = () => {
             </header>
 
             {showGuide && <PostbackGuide />}
+            {showTestPage && <TestPage />}
             
             <main>
                 {!user ? (

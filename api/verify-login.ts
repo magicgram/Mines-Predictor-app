@@ -30,21 +30,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const dbKey = `user:${userId}`;
     const userData = await kv.get<UserData>(dbKey);
 
-    // Check if user data exists and if they have made the first deposit.
-    if (userData && userData.hasFirstDeposit) {
-      // Login is successful. Send back success and the current redeposit count.
-      res.status(200).json({
-        success: true,
-        redepositCount: userData.redepositCount || 0,
-      });
+    if (userData) {
+      // User exists in the database. This means they have at least registered.
+      if (userData.hasFirstDeposit) {
+        // Login is successful because they have made a qualifying first deposit.
+        res.status(200).json({
+          success: true,
+          redepositCount: userData.redepositCount || 0,
+        });
+      } else {
+        // User has registered but not made a qualifying first deposit yet.
+        const needsDepositMessage = `🎉 Great, you have successfully completed registration!
+✅ Your account is synchronized with the bot
+💴 To gain access to signals, deposit your account (make a deposit) with at least $5 in any currency
+🕹️ After successfully replenishing your account, Enter Your Players I'd to get access.`;
+        res.status(403).json({
+          success: false,
+          message: needsDepositMessage,
+        });
+      }
     } else {
-      // Login failed.
-      const errorMessage = `❌ Sorry, You are Not Registered!
+      // User does not exist in the database at all.
+      const notRegisteredMessage = `❌ Sorry, You are Not Registered!
 Please click the REGISTER button first and complete your registration using Register Here Button.
 After successful registration, come back and enter your Player ID.`;
       res.status(403).json({
         success: false,
-        message: errorMessage,
+        message: notRegisteredMessage,
       });
     }
   } catch (error) {

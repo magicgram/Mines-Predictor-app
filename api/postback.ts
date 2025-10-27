@@ -1,5 +1,4 @@
 import { kv } from '@vercel/kv';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 // This is a Vercel Serverless Function that acts as our backend endpoint.
 // It will be accessible at https://your-app-name.vercel.app/api/postback
@@ -14,7 +13,7 @@ interface UserData {
   redepositCount: number;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req, res) {
   // We only accept GET requests as per 1Win postback standard
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });

@@ -1,5 +1,4 @@
 import { kv } from '@vercel/kv';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface UserData {
   id: string;
@@ -7,7 +6,7 @@ interface UserData {
   redepositCount: number;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }

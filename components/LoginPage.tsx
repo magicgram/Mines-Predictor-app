@@ -42,7 +42,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
                             required
                         />
                     </div>
-                    {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+                    {error && <p className="text-red-400 text-sm text-center whitespace-pre-wrap">{error}</p>}
                     <div>
                         <button
                             type="submit"

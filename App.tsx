@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';

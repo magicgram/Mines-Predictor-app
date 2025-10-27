@@ -57,11 +57,23 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
                         </button>
                     </div>
                 </form>
-                <div className="text-center">
-                    <p className="text-gray-400">Don't have an account?</p>
+                
+                <div className="space-y-4 pt-2">
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div className="w-full border-t border-gray-600" />
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-gray-800 px-3 text-sm text-gray-400">
+                                First time here?
+                            </span>
+                        </div>
+                    </div>
+                    
                     <button
                         onClick={handleRegister}
-                        className="font-medium text-purple-400 hover:underline"
+                        type="button"
+                        className="w-full px-4 py-3 font-semibold text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 transition-colors"
                     >
                         Register Here
                     </button>

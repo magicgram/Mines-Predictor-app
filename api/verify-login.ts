@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } else {
         // User has registered but not made a qualifying first deposit yet.
         const needsDepositMessage = `🎉 Great, you have successfully completed registration!
-✅ Your account is synchronized with the bot
+✅ Your account is synchronized with the app
 💴 To gain access to signals, deposit your account (make a deposit) with at least $5 in any currency
 🕹️ After successfully replenishing your account, Enter Your Players I'd to get access.`;
         res.status(403).json({

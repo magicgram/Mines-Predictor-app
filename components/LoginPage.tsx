@@ -6,8 +6,11 @@ interface LoginPageProps {
     isLoading: boolean;
 }
 
-// IMPORTANT: Replace YOUR_CODE_HERE with your actual affiliate code.
-const AFFILIATE_LINK = 'https://1waff.com/?p=YOUR_CODE_HERE';
+// IMPORTANT: Set your affiliate link in the Vercel Environment Variables.
+// The variable name must be VITE_AFFILIATE_LINK
+// Fix for: Property 'env' does not exist on type 'ImportMeta'.
+// @ts-ignore
+const AFFILIATE_LINK = import.meta.env.VITE_AFFILIATE_LINK || 'https://1waff.com/?p=YOUR_CODE_HERE';
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
     const [userId, setUserId] = useState('');

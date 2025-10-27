@@ -1,3 +1,4 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { kv } from '@vercel/kv';
 
 // This is a Vercel Serverless Function that acts as our backend endpoint.
@@ -13,7 +14,7 @@ interface UserData {
   redepositCount: number;
 }
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // We only accept GET requests as per 1Win postback standard
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });

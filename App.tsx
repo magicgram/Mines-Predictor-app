@@ -1,8 +1,8 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
 import PostbackGuide from './components/PostbackGuide';
-import TestPage from './components/TestPage';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 
@@ -12,7 +12,6 @@ const App: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [infoMessage, setInfoMessage] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState<boolean>(false);
-    const [showTestPage, setShowTestPage] = useState<boolean>(false);
 
     const loadUserFromStorage = useCallback(async () => {
         const storedUser = localStorage.getItem('minesPredictorUser');
@@ -82,22 +81,10 @@ const App: React.FC = () => {
                 <h1 className="text-xl sm:text-2xl font-bold shimmer-text">Mines Predictor Pro</h1>
                 <div className="flex items-center flex-wrap gap-2">
                      <button
-                        onClick={() => {
-                            setShowGuide(!showGuide);
-                            if (!showGuide) setShowTestPage(false);
-                        }}
+                        onClick={() => setShowGuide(!showGuide)}
                         className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-white/5 hover:bg-white/10 border border-white/10"
                     >
                         {showGuide ? 'Hide Guide' : 'Setup Guide'}
-                    </button>
-                    <button
-                        onClick={() => {
-                            setShowTestPage(!showTestPage);
-                             if (!showTestPage) setShowGuide(false);
-                        }}
-                        className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/20"
-                    >
-                        {showTestPage ? 'Hide Tester' : 'Test Postback'}
                     </button>
                     {user && (
                         <button
@@ -111,10 +98,7 @@ const App: React.FC = () => {
             </header>
 
             <main className="transition-all duration-300">
-                {showGuide && <PostbackGuide />}
-                {showTestPage && <TestPage />}
-                
-                {!showGuide && !showTestPage && (
+                {showGuide ? <PostbackGuide /> : (
                     !user ? (
                         <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
                     ) : (

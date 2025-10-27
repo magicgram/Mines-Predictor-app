@@ -40,9 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     } else {
       // Login failed.
       const errorMessage = `❌ Sorry, You are Not Registered!
-
-Please click the REGISTER button first and complete your registration using our link.
-
+Please click the REGISTER button first and complete your registration using Register Here Button.
 After successful registration, come back and enter your Player ID.`;
       res.status(403).json({
         success: false,

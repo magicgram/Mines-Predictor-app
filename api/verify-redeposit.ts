@@ -1,0 +1,48 @@
+import { kv } from '@vercel/kv';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+interface UserData {
+  id: string;
+  hasFirstDeposit: boolean;
+  redepositCount: number;
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
+
+  try {
+    const { userId, knownRedeposits } = req.query;
+
+    if (!userId || typeof userId !== 'string' || !knownRedeposits) {
+      return res.status(400).json({ message: 'User ID and known redeposits are required' });
+    }
+
+    const knownCount = parseInt(knownRedeposits as string, 10);
+    if (isNaN(knownCount)) {
+        return res.status(400).json({ message: 'Invalid knownRedeposits value' });
+    }
+
+    const dbKey = `user:${userId}`;
+    const userData = await kv.get<UserData>(dbKey);
+    const currentCount = userData?.redepositCount || 0;
+
+    // A successful re-deposit means the count in the database is greater
+    // than the count the user's app session last knew about.
+    if (currentCount > knownCount) {
+      res.status(200).json({
+        success: true,
+        newRedepositCount: currentCount,
+      });
+    } else {
+      res.status(403).json({
+        success: false,
+        message: "Deposit not confirmed yet. Please wait a moment and try again.",
+      });
+    }
+  } catch (error) {
+    console.error('Redeposit verification error:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}

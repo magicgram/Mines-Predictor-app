@@ -65,7 +65,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading }) => {
                         </div>
                         <div className="relative flex justify-center">
                             <span className="bg-gray-800 px-3 text-sm text-gray-400">
-                                First time here?
+                                I don't have account
                             </span>
                         </div>
                     </div>

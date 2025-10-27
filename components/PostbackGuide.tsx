@@ -2,12 +2,12 @@ import React from 'react';
 
 const Step: React.FC<{ number: number; title: string; children: React.ReactNode }> = ({ number, title, children }) => (
     <div>
-        <h3 className="flex items-center text-xl font-semibold text-white mb-3">
-            <span className="flex items-center justify-center w-8 h-8 mr-4 bg-accent-purple/20 text-accent-purple rounded-full font-bold">{number}</span>
+        <h3 className="flex items-center text-xl font-semibold text-white mb-3 font-['Orbitron']">
+            <span className="flex items-center justify-center w-8 h-8 mr-4 bg-gradient-to-br from-accent-cyan to-accent-magenta text-black rounded-full font-bold">{number}</span>
             {title}
         </h3>
         <div className="pl-12 border-l-2 border-white/10 ml-4">
-            <div className="prose prose-invert text-text-secondary max-w-none space-y-2">
+            <div className="prose prose-invert text-text-secondary max-w-none space-y-3">
                 {children}
             </div>
         </div>
@@ -22,7 +22,7 @@ const PostbackGuide: React.FC = () => {
     return (
         <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
             <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">
+                <h2 className="text-3xl font-bold shimmer-text mb-2">
                     1Win Affiliate Postback Setup
                 </h2>
                 <p className="text-text-secondary">Connect your affiliate account for automated user verification.</p>
@@ -41,7 +41,7 @@ const PostbackGuide: React.FC = () => {
                     <p>
                         In your Vercel project's "Settings" → "Environment Variables", you must add your affiliate link.
                     </p>
-                    <div className="mt-3 bg-black/30 p-4 rounded-lg border border-white/20">
+                    <div className="mt-3 bg-black/40 p-4 rounded-lg border border-white/20">
                         <pre className="font-mono text-sm text-left">
                             <code className="text-cyan-400">VITE_AFFILIATE_LINK</code>=<code className="text-yellow-400">"https://1waff.com/?p=YOUR_CODE"</code>
                         </pre>
@@ -53,7 +53,7 @@ const PostbackGuide: React.FC = () => {
 
                 <Step number={4} title="Create the Postback URL">
                     <p>In your 1Win affiliate dashboard, go to the S2S settings and use the following URL for "First Deposit" and "Repeated Deposit" events:</p>
-                    <pre className="block bg-black/30 p-4 rounded-lg mt-3 text-sm text-yellow-300 break-all border border-white/20">
+                    <pre className="block bg-black/40 p-4 rounded-lg mt-3 text-sm text-yellow-300 break-all border border-white/20">
                         <code>
                             <span className="text-gray-400">[Your Vercel URL]</span>
                             <span className="text-cyan-400">{postbackEndpoint}</span>

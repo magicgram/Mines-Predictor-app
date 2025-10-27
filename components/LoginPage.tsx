@@ -30,8 +30,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
         <div className="flex flex-col items-center justify-center">
             <div className="w-full max-w-md p-8 space-y-6 glassmorphic-card gradient-border rounded-2xl shadow-2xl">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-white">Unlock Predictions</h2>
-                    <p className="text-text-secondary mt-2">Enter your Player ID to begin.</p>
+                    <h2 className="text-3xl font-bold text-white font-['Orbitron']">Unlock Predictions</h2>
+                    <p className="text-text-secondary mt-2">Enter your Player ID to synchronize.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -43,13 +43,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
                             placeholder="12345678"
-                            className="w-full px-4 py-3 text-text-primary bg-black/30 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all"
+                            className="form-input"
                             required
                         />
                     </div>
 
                     {infoMessage && (
-                         <div className="p-4 bg-purple-900/30 border border-purple-500/50 rounded-lg text-sm space-y-3">
+                         <div className="p-4 bg-black/30 border border-purple-500/50 rounded-lg text-sm space-y-3">
                              {infoMessage.split('\n').map((line, index) => {
                                  const trimmedLine = line.trim();
                                  const firstSpaceIndex = trimmedLine.indexOf(' ');
@@ -67,7 +67,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                      )}
 
                     {error && 
-                        <div className="flex items-start p-4 bg-red-900/30 border border-red-500/50 rounded-lg text-sm space-x-3">
+                        <div className="flex items-start p-4 bg-red-900/40 border border-red-500/50 rounded-lg text-sm space-x-3">
                              <span className="text-lg text-red-400 mt-1">❌</span>
                              <p className="text-red-300 whitespace-pre-wrap flex-1">{error}</p>
                         </div>
@@ -77,10 +77,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full px-4 py-3 font-semibold text-white bg-gradient-to-r from-accent-purple to-accent-cyan rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-dark-secondary focus:ring-accent-purple disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all transform hover:scale-105"
+                            className="w-full btn btn-primary"
                         >
                             {isLoading ? (
-                                <div className="w-6 h-6 border-2 border-dashed rounded-full animate-spin border-white"></div>
+                                <div className="w-6 h-6 border-2 border-dashed rounded-full animate-spin border-white mx-auto"></div>
                             ) : (
                                 'Continue'
                             )}
@@ -94,7 +94,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                             <div className="w-full border-t border-white/20" />
                         </div>
                         <div className="relative flex justify-center">
-                            <span className="bg-bg-dark-secondary px-3 text-sm text-text-secondary rounded-full">
+                            <span className="bg-bg-secondary px-3 text-sm text-text-secondary rounded-full">
                                 New to the game?
                             </span>
                         </div>
@@ -103,7 +103,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                     <button
                         onClick={handleRegister}
                         type="button"
-                        className="w-full px-4 py-3 font-semibold text-accent-cyan bg-transparent border-2 border-accent-cyan rounded-lg hover:bg-accent-cyan hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-dark-secondary focus:ring-accent-cyan transition-all transform hover:scale-105"
+                        className="w-full btn"
                     >
                         Register Here
                     </button>

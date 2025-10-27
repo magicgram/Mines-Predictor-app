@@ -88,25 +88,25 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-            <header className="flex justify-between items-center mb-10 p-4">
+            <header className="flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10">
                 <h1 className="text-2xl sm:text-3xl font-bold shimmer-text">Mines Predictor Pro</h1>
                 <div className="flex items-center flex-wrap gap-3">
                      <button
                         onClick={handleToggleTestPage}
-                        className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 shadow-md hover:shadow-yellow-500/20"
+                        className="btn text-sm"
                     >
                         {showTestPage ? 'Hide Tester' : 'Test Postback'}
                     </button>
                      <button
                         onClick={handleToggleGuide}
-                        className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-white/5 hover:bg-white/10 border border-white/20 shadow-md hover:shadow-cyan-500/20"
+                        className="btn text-sm"
                     >
                         {showGuide ? 'Hide Guide' : 'Setup Guide'}
                     </button>
                     {user && (
                         <button
                             onClick={handleLogout}
-                            className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30 shadow-md hover:shadow-red-500/20"
+                            className="btn text-sm"
                         >
                             Logout
                         </button>

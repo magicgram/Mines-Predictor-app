@@ -30,18 +30,20 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
         <div className="flex flex-col items-center justify-center">
             <div className="w-full max-w-md p-8 space-y-6 glassmorphic-card gradient-border rounded-2xl shadow-2xl">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-white">Welcome Back</h2>
-                    <p className="text-gray-400 mt-2">Enter your Player ID to get predictions.</p>
+                    <h2 className="text-3xl font-bold text-white">Unlock Predictions</h2>
+                    <p className="text-text-secondary mt-2">Enter your Player ID to begin.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
+                         <label htmlFor="userId" className="text-sm font-medium text-text-secondary mb-2 block">Player ID</label>
                         <input
+                            id="userId"
                             type="text"
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
-                            placeholder="Your Game Player ID"
-                            className="w-full px-4 py-3 text-gray-200 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                            placeholder="12345678"
+                            className="w-full px-4 py-3 text-text-primary bg-black/30 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all"
                             required
                         />
                     </div>
@@ -75,7 +77,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full px-4 py-3 font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all transform hover:scale-105"
+                            className="w-full px-4 py-3 font-semibold text-white bg-gradient-to-r from-accent-purple to-accent-cyan rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-dark-secondary focus:ring-accent-purple disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all transform hover:scale-105"
                         >
                             {isLoading ? (
                                 <div className="w-6 h-6 border-2 border-dashed rounded-full animate-spin border-white"></div>
@@ -89,10 +91,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                 <div className="space-y-4 pt-4">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-gray-700" />
+                            <div className="w-full border-t border-white/20" />
                         </div>
                         <div className="relative flex justify-center">
-                            <span className="bg-[rgba(26,26,46,0.6)] px-3 text-sm text-gray-400">
+                            <span className="bg-bg-dark-secondary px-3 text-sm text-text-secondary rounded-full">
                                 New to the game?
                             </span>
                         </div>
@@ -101,7 +103,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                     <button
                         onClick={handleRegister}
                         type="button"
-                        className="w-full px-4 py-3 font-semibold text-white bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg hover:from-teal-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-cyan-500 transition-all transform hover:scale-105"
+                        className="w-full px-4 py-3 font-semibold text-accent-cyan bg-transparent border-2 border-accent-cyan rounded-lg hover:bg-accent-cyan hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-dark-secondary focus:ring-accent-cyan transition-all transform hover:scale-105"
                     >
                         Register Here
                     </button>

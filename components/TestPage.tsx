@@ -40,12 +40,12 @@ const TestPage: React.FC = () => {
                 <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400 mb-2">
                     Postback Testing Tool
                 </h2>
-                <p className="text-gray-400">Simulate 1Win postbacks to verify your backend. After a deposit test, log in with the same User ID.</p>
+                <p className="text-text-secondary">Simulate 1Win postbacks to verify your backend. After a deposit test, log in with the same User ID.</p>
             </div>
 
 
             <div className="mb-6">
-                <label htmlFor="test-user-id" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="test-user-id" className="block text-sm font-medium text-text-secondary mb-2">
                     User ID to Test
                 </label>
                 <input
@@ -54,7 +54,7 @@ const TestPage: React.FC = () => {
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                     placeholder="e.g., testuser123"
-                    className="w-full px-4 py-3 text-gray-200 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
+                    className="w-full px-4 py-3 text-text-primary bg-black/30 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                 />
             </div>
 
@@ -62,45 +62,45 @@ const TestPage: React.FC = () => {
                 <button
                     onClick={() => handleTest({ status: 'registration' })}
                     disabled={isLoading}
-                    className="px-4 py-3 font-semibold text-white bg-blue-600/80 rounded-lg hover:bg-blue-600 disabled:bg-gray-700 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-blue-600/80 rounded-lg hover:bg-blue-600 disabled:bg-gray-700/50 transition-colors"
                 >
                     Test Registration
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '10' })}
                     disabled={isLoading}
-                    className="px-4 py-3 font-semibold text-white bg-green-600/80 rounded-lg hover:bg-green-600 disabled:bg-gray-700 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-green-600/80 rounded-lg hover:bg-green-600 disabled:bg-gray-700/50 transition-colors"
                 >
                     Test 1st Deposit ($10)
                 </button>
                  <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '2' })}
                     disabled={isLoading}
-                    className="px-4 py-3 font-semibold text-white bg-red-600/80 rounded-lg hover:bg-red-600 disabled:bg-gray-700 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-red-600/80 rounded-lg hover:bg-red-600 disabled:bg-gray-700/50 transition-colors"
                 >
                     Test Failed Deposit ($2)
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'dep', dep_sum_usd: '5' })}
                     disabled={isLoading}
-                    className="px-4 py-3 font-semibold text-white bg-purple-600/80 rounded-lg hover:bg-purple-600 disabled:bg-gray-700 transition-colors"
+                    className="px-4 py-3 font-semibold text-white bg-purple-600/80 rounded-lg hover:bg-purple-600 disabled:bg-gray-700/50 transition-colors"
                 >
                     Test Re-Deposit ($5)
                 </button>
             </div>
 
-            <div className="mt-6 min-h-[100px]">
+            <div className="mt-6 min-h-[100px] bg-black/30 p-4 rounded-lg border border-white/10">
                 {isLoading && (
                     <div className="flex items-center justify-center p-4">
                         <div className="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-yellow-500"></div>
-                        <p className="ml-4 text-gray-300">Sending test postback...</p>
+                        <p className="ml-4 text-text-secondary">Sending test postback...</p>
                     </div>
                 )}
                 {responseMessage && (
-                     <pre className="p-4 bg-gray-900/50 text-green-300 rounded-lg border border-green-500/30 text-sm whitespace-pre-wrap">{responseMessage}</pre>
+                     <pre className="text-green-300 text-sm whitespace-pre-wrap">{responseMessage}</pre>
                 )}
                 {error && (
-                    <pre className="p-4 bg-gray-900/50 text-red-300 rounded-lg border border-red-500/30 text-sm whitespace-pre-wrap">{error}</pre>
+                    <pre className="text-red-300 text-sm whitespace-pre-wrap">{error}</pre>
                 )}
             </div>
         </div>

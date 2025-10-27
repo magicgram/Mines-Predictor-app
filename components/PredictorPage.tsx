@@ -66,37 +66,40 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
         <div className="flex flex-col items-center w-full">
             <div className="w-full max-w-lg p-6 space-y-6 glassmorphic-card gradient-border rounded-2xl shadow-2xl">
                 <div className="text-center">
-                    <p className="text-gray-400">Welcome, Player <span className="font-bold text-purple-400">{user.id}</span></p>
-                    <div className="mt-2">
-                        <p className="text-sm text-gray-300 mb-1">{user.predictionCount}/{PREDICTION_LIMIT} Predictions Used</p>
-                        <div className="w-full bg-gray-700 rounded-full h-2.5">
-                            <div className="bg-gradient-to-r from-purple-500 to-cyan-500 h-2.5 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+                    <p className="text-text-secondary">Welcome, Player <span className="font-bold text-accent-purple">{user.id}</span></p>
+                    <div className="mt-4">
+                        <div className="flex justify-between items-center mb-1 text-sm">
+                             <p className="text-text-primary">Predictions Used</p>
+                             <p className="font-semibold text-white">{user.predictionCount} / {PREDICTION_LIMIT}</p>
+                        </div>
+                        <div className="w-full bg-black/30 rounded-full h-2.5 border border-white/10">
+                            <div className="bg-gradient-to-r from-accent-purple to-accent-cyan h-full rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }}></div>
                         </div>
                     </div>
                 </div>
                 
-                <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-center text-gray-300">Select Traps</h3>
-                    <div className="flex justify-center space-x-2 sm:space-x-4">
+                <div className="space-y-3 text-center">
+                    <h3 className="text-lg font-semibold text-text-primary">Select Traps</h3>
+                    <div className="flex justify-center bg-black/30 p-1 rounded-lg border border-white/10 w-max mx-auto">
                         {[1, 3, 5].map(num => (
                             <button
                                 key={num}
                                 onClick={() => setTraps(num)}
                                 disabled={isRevealed}
-                                className={`w-20 py-2 rounded-lg font-semibold transition-all duration-300 transform focus:outline-none ${
+                                className={`w-24 py-2 rounded-md font-semibold transition-all duration-300 text-sm focus:outline-none ${
                                     traps === num 
-                                    ? 'bg-purple-600 text-white shadow-lg scale-110' 
-                                    : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
-                                } disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100`}
+                                    ? 'bg-accent-purple/80 text-white shadow-lg' 
+                                    : 'bg-transparent text-text-secondary hover:bg-white/5'
+                                } disabled:opacity-50 disabled:cursor-not-allowed`}
                             >
-                                {num}
+                                {num} Traps
                             </button>
                         ))}
                     </div>
                 </div>
 
                 {isRevealed && (
-                    <div className="my-4 p-3 bg-gray-900/50 rounded-lg text-center border border-green-500/30">
+                    <div className="my-2 p-3 bg-black/30 rounded-lg text-center border border-green-500/30">
                         <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-cyan-300">Accuracy: {accuracy}%</p>
                         <p className="text-yellow-500 text-xs mt-1">Warning: Play responsibly and within your limits.</p>
                     </div>
@@ -106,11 +109,11 @@ const PredictorPage: React.FC<PredictorPageProps> = ({ user, onUpdateUser }) => 
 
                 {showLimitMessage ? (
                     <div className="mt-6 text-center p-6 bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 border border-yellow-600/50 rounded-lg shadow-lg">
-                        <p className="font-bold text-2xl text-yellow-300">Prediction Limit Reached!</p>
+                        <h3 className="font-bold text-2xl text-yellow-300">Prediction Limit Reached!</h3>
                         <p className="text-yellow-400 mt-2">To unlock another 15 predictions, please make a new deposit of at least $4.</p>
                         <button
                             onClick={handleDepositAgain}
-                            className="mt-4 px-8 py-3 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                            className="mt-4 px-8 py-3 bg-gradient-to-r from-green-500 to-teal-500 hover:opacity-90 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg"
                         >
                             Deposit Again
                         </button>

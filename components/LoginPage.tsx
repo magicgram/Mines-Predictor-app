@@ -95,7 +95,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                         </div>
                         <div className="relative flex justify-center">
                             <span className="bg-bg-secondary px-3 text-sm text-text-secondary rounded-full">
-                                New to the game?
+                                I don't have account
                             </span>
                         </div>
                     </div>

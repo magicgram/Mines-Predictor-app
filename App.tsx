@@ -13,6 +13,17 @@ const App: React.FC = () => {
     const [infoMessage, setInfoMessage] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState<boolean>(false);
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
+    
+    // State to track login attempts from localStorage
+    const [loginAttempts, setLoginAttempts] = useState<Record<string, number>>(() => {
+        try {
+            const storedAttempts = localStorage.getItem('loginAttempts');
+            return storedAttempts ? JSON.parse(storedAttempts) : {};
+        } catch (e) {
+            console.error("Failed to parse login attempts from localStorage", e);
+            return {};
+        }
+    });
 
     const loadUserFromStorage = useCallback(async () => {
         const storedUser = localStorage.getItem('minesPredictorUser');
@@ -44,12 +55,37 @@ const App: React.FC = () => {
         setError(null);
         setInfoMessage(null);
         const result = await verificationService.verifyInitialLogin(userId);
+        
         if (result.success) {
             const newUser: User = { id: userId, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.redepositCount || 0 };
             localStorage.setItem('minesPredictorUser', JSON.stringify(newUser));
             setUser(newUser);
+
+            // On successful login, clear the attempt counter for this user
+            const updatedAttempts = { ...loginAttempts };
+            if (updatedAttempts[userId]) {
+                delete updatedAttempts[userId];
+                setLoginAttempts(updatedAttempts);
+                localStorage.setItem('loginAttempts', JSON.stringify(updatedAttempts));
+            }
         } else {
-            if (result.message && result.message.includes('successfully completed registration')) {
+            // Check for the specific "not found" error from the backend.
+            if (result.message && result.message.startsWith("No registration found yet!")) {
+                const currentCount = loginAttempts[userId] || 0;
+                const newCount = currentCount + 1;
+                
+                const updatedAttempts = { ...loginAttempts, [userId]: newCount };
+                setLoginAttempts(updatedAttempts);
+                localStorage.setItem('loginAttempts', JSON.stringify(updatedAttempts));
+
+                if (newCount < 3) {
+                    // For attempts 1 and 2, show the "Not Registered" message.
+                    setError("Sorry, You are Not Registered!\nPlease click the REGISTER button first and complete your registration using Register Here Button.");
+                } else {
+                    // For the 3rd attempt and onwards, suggest waiting.
+                    setError("No registration found yet!\nPlease wait 2-5 minutes after registration and enter your Player ID again.");
+                }
+            } else if (result.message && result.message.includes('successfully completed registration')) {
                 setInfoMessage(result.message);
             } else {
                 setError(result.message || "Login failed.");
@@ -78,7 +114,7 @@ const App: React.FC = () => {
         setShowTestPage(!showTestPage);
     };
     
-    if (isLoading) {
+    if (isLoading && !user) { // Only show full-screen loader on initial load
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="loading-spinner"></div>

@@ -171,11 +171,15 @@ const App: React.FC = () => {
             </div>
         );
     }
+    
+    const isPredictorPageActive = user && !showGuide && !showTestPage;
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
             <header className="flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10">
-                <h1 className="text-2xl sm:text-3xl font-bold shimmer-text">Mines Predictor Pro</h1>
+                <h1 className={`text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 ${isPredictorPageActive ? 'opacity-0' : 'opacity-100'}`}>
+                    Mines Predictor Pro
+                </h1>
                 <div className="flex items-center flex-wrap gap-3">
                      <button
                         onClick={handleToggleTestPage}
@@ -205,7 +209,12 @@ const App: React.FC = () => {
                     !user ? (
                         <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
                     ) : (
-                        <PredictorPage user={user} onUpdateUser={updateUser} />
+                        <>
+                            <h2 className="text-4xl sm:text-5xl font-bold text-white text-center mb-8 font-['Orbitron']" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.4)'}}>
+                                Mines Predictor Pro
+                            </h2>
+                            <PredictorPage user={user} onUpdateUser={updateUser} />
+                        </>
                     )
                 )}
             </main>

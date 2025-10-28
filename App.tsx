@@ -205,8 +205,10 @@ const App: React.FC = () => {
                 onProfilePictureChange={handleProfilePictureChange}
                 user={user}
             />
-            <header className="relative flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10 z-10">
-                <div className="relative">
+            {/* Header updated to use CSS Grid for better responsiveness on mobile */}
+            <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10 z-10">
+                {/* Left: Menu Button */}
+                <div>
                     <button
                         onClick={() => setIsMenuOpen(true)}
                         className="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-cyan"
@@ -216,14 +218,16 @@ const App: React.FC = () => {
                     </button>
                 </div>
                 
+                {/* Center: Title */}
                 <h1 
                     onClick={handleShowDashboard}
-                    className={`absolute left-1/2 -translate-x-1/2 text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 ${isPredictorPageActive ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer hover:opacity-80'}`}
+                    className={`text-center text-xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 truncate ${isPredictorPageActive ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer hover:opacity-80'}`}
                 >
                     Mines Predictor Pro
                 </h1>
 
-                <div className="flex items-center">
+                {/* Right: Logout Button */}
+                <div className="flex items-center justify-end">
                     {user && (
                         <button
                             onClick={handleLogout}

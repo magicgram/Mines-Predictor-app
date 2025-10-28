@@ -51,7 +51,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     } else {
       // User does not exist in the database at all.
-      const notRegisteredMessage = `❌ Sorry, You are Not Registered!
+      const notRegisteredMessage = `Sorry, You are Not Registered!
 Please click the REGISTER button first and complete your registration using Register Here Button.
 After successful registration, come back and enter your Player ID.`;
       res.status(403).json({

@@ -159,6 +159,13 @@ const App: React.FC = () => {
         localStorage.setItem(`${USER_DATA_KEY_PREFIX}${updatedUser.id}`, JSON.stringify(updatedUser));
     };
 
+    const handleProfilePictureChange = (url: string) => {
+        if (user) {
+            const updatedUser = { ...user, profilePictureUrl: url };
+            updateUser(updatedUser);
+        }
+    };
+
     const handleShowGuide = () => {
         setShowTestPage(false);
         setShowGuide(true);
@@ -195,6 +202,7 @@ const App: React.FC = () => {
                 onShowGuide={handleShowGuide}
                 onShowTestPage={handleShowTestPage}
                 onShowDashboard={handleShowDashboard}
+                onProfilePictureChange={handleProfilePictureChange}
                 user={user}
             />
             <header className="relative flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10 z-10">

@@ -12,6 +12,7 @@ interface SidebarProps {
     onShowGuide: () => void;
     onShowTestPage: () => void;
     onShowDashboard: () => void;
+    onProfilePictureChange: (url: string) => void;
     user: User | null;
 }
 
@@ -26,7 +27,19 @@ const NavLink: React.FC<{ onClick: () => void; icon: React.ReactNode; text: stri
     </a>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowTestPage, onShowDashboard, user }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowTestPage, onShowDashboard, user, onProfilePictureChange }) => {
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result as string;
+                onProfilePictureChange(result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <div 
@@ -57,11 +70,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowT
                 <div className="flex flex-col h-full">
                     {/* User Info - Reduced margins and icon size for a sleeker look */}
                     <div className="flex items-center p-4 pt-16 space-x-3 border-b border-white/10">
-                        <div className="relative p-0.5 rounded-full gradient-border flex-shrink-0">
-                            <div className="w-12 h-12 rounded-full bg-bg-secondary flex items-center justify-center">
-                                <UserIcon className="h-8 w-8 text-accent-cyan"/>
+                         <input
+                            type="file"
+                            id="profile-pic-upload"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            disabled={!user}
+                        />
+                        <label htmlFor="profile-pic-upload" className={`relative p-0.5 rounded-full gradient-border flex-shrink-0 ${user ? 'cursor-pointer' : 'cursor-default'}`}>
+                            <div className="w-12 h-12 rounded-full bg-bg-secondary flex items-center justify-center overflow-hidden">
+                                {user?.profilePictureUrl ? (
+                                    <img src={user.profilePictureUrl} alt="Profile" className="w-full h-full object-cover" />
+                                ) : (
+                                    <UserIcon className="h-8 w-8 text-accent-cyan"/>
+                                )}
                             </div>
-                        </div>
+                        </label>
                         <div className="overflow-hidden">
                             <p className="font-bold text-base text-white font-['Orbitron'] tracking-wide truncate">
                                 {user ? `Player ${user.id}` : 'Welcome'}

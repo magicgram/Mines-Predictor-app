@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
 import PostbackGuide from './components/PostbackGuide';
 import TestPage from './components/TestPage';
+import Sidebar from './components/Sidebar';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 import MenuIcon from './components/icons/MenuIcon';
@@ -21,7 +22,6 @@ const App: React.FC = () => {
     const [showGuide, setShowGuide] = useState<boolean>(false);
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-    const menuRef = useRef<HTMLDivElement>(null);
 
     
     // State to track login attempts from localStorage
@@ -34,19 +34,6 @@ const App: React.FC = () => {
             return {};
         }
     });
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setIsMenuOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     const loadUserFromStorage = useCallback(async () => {
         const activeUserId = localStorage.getItem(ACTIVE_USER_KEY);
@@ -172,14 +159,22 @@ const App: React.FC = () => {
         localStorage.setItem(`${USER_DATA_KEY_PREFIX}${updatedUser.id}`, JSON.stringify(updatedUser));
     };
 
-    const handleToggleGuide = () => {
+    const handleShowGuide = () => {
         setShowTestPage(false);
-        setShowGuide(!showGuide);
+        setShowGuide(true);
+        setIsMenuOpen(false);
     };
 
-    const handleToggleTestPage = () => {
+    const handleShowTestPage = () => {
         setShowGuide(false);
-        setShowTestPage(!showTestPage);
+        setShowTestPage(true);
+        setIsMenuOpen(false);
+    };
+
+    const handleShowDashboard = () => {
+        setShowGuide(false);
+        setShowTestPage(false);
+        setIsMenuOpen(false);
     };
     
     if (isLoading && !user) { // Only show full-screen loader on initial load
@@ -194,31 +189,23 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-            <header className="relative flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10">
-                <div className="relative" ref={menuRef}>
+            <Sidebar
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                onShowGuide={handleShowGuide}
+                onShowTestPage={handleShowTestPage}
+                onShowDashboard={handleShowDashboard}
+                user={user}
+            />
+            <header className="relative flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10 z-10">
+                <div className="relative">
                     <button
-                        onClick={() => setIsMenuOpen(prev => !prev)}
+                        onClick={() => setIsMenuOpen(true)}
                         className="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-cyan"
                         aria-label="Open menu"
                     >
                         <MenuIcon className="h-6 w-6 text-white"/>
                     </button>
-                    {isMenuOpen && (
-                        <div className="absolute left-0 mt-2 w-56 p-2 space-y-1 origin-top-left glassmorphic-card gradient-border rounded-lg shadow-lg z-50">
-                            <button
-                                onClick={() => { handleToggleTestPage(); setIsMenuOpen(false); }}
-                                className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10 transition-colors flex items-center gap-3"
-                            >
-                                <span role="img" aria-label="test tube">🧪</span> Test Postback
-                            </button>
-                            <button
-                                onClick={() => { handleToggleGuide(); setIsMenuOpen(false); }}
-                                className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10 transition-colors flex items-center gap-3"
-                            >
-                                <span role="img" aria-label="book">📖</span> Setup Guide
-                            </button>
-                        </div>
-                    )}
                 </div>
                 
                 <h1 className={`absolute left-1/2 -translate-x-1/2 text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 pointer-events-none ${isPredictorPageActive ? 'opacity-0' : 'opacity-100'}`}>

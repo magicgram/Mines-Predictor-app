@@ -208,7 +208,10 @@ const App: React.FC = () => {
                     </button>
                 </div>
                 
-                <h1 className={`absolute left-1/2 -translate-x-1/2 text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 pointer-events-none ${isPredictorPageActive ? 'opacity-0' : 'opacity-100'}`}>
+                <h1 
+                    onClick={handleShowDashboard}
+                    className={`absolute left-1/2 -translate-x-1/2 text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 ${isPredictorPageActive ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer hover:opacity-80'}`}
+                >
                     Mines Predictor Pro
                 </h1>
 

@@ -37,21 +37,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowT
         >
             {/* Overlay */}
             <div 
-                className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 ease-out ${isOpen ? 'opacity-100' : 'opacity-0'}`}
                 onClick={onClose}
             ></div>
             
             {/* Close Button on top right of screen */}
              <button 
                 onClick={onClose} 
-                className={`absolute top-5 right-5 text-gray-400 hover:text-white hover:scale-110 transform transition-all duration-200 z-50 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute top-5 right-5 text-gray-400 hover:text-white hover:scale-110 transform transition-all duration-300 ease-out z-50 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
                 aria-label="Close menu"
             >
                 <CloseIcon className="h-8 w-8" />
             </button>
 
-            {/* Panel - Reduced width from w-80 to w-72 */}
-            <div className={`relative flex flex-col w-72 max-w-[calc(100vw-40px)] h-full glassmorphic-card gradient-border transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            {/* Panel - Upgraded with a rich gradient background */}
+            <div className={`relative flex flex-col w-72 max-w-[calc(100vw-40px)] h-full backdrop-blur-md border-r border-white/10 bg-gradient-to-b from-[#100a28] to-[#3b0734] shadow-2xl transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 
                 {/* Removed p-6 from parent and added px-4 to children for more control */}
                 <div className="flex flex-col h-full">

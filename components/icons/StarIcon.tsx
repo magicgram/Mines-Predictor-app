@@ -5,11 +5,11 @@ const StarIcon: React.FC = () => (
     <div style={{ animation: 'star-shimmer 2.5s infinite' }}>
         <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-10 w-10 text-yellow-400" 
+            className="h-10 w-10" 
             viewBox="0 0 24 24" 
             strokeWidth="1.5" 
-            stroke="currentColor" 
-            fill="currentColor" 
+            stroke="white" 
+            fill="white" 
             strokeLinecap="round" 
             strokeLinejoin="round"
         >

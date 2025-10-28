@@ -226,14 +226,21 @@ const App: React.FC = () => {
                     Mines Predictor Pro
                 </h1>
 
-                {/* Right: Logout Button */}
+                {/* Right: Logout / Guide Button */}
                 <div className="flex items-center justify-end">
-                    {user && (
+                    {user ? (
                         <button
                             onClick={handleLogout}
                             className="btn text-sm"
                         >
                             Logout
+                        </button>
+                    ) : (
+                         <button
+                            onClick={handleShowGuide}
+                            className="btn text-sm"
+                        >
+                            Guide
                         </button>
                     )}
                 </div>

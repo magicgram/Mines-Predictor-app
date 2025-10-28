@@ -1,11 +1,12 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
 import PostbackGuide from './components/PostbackGuide';
 import TestPage from './components/TestPage';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
+import MenuIcon from './components/icons/MenuIcon';
 
 // Local storage keys
 const ACTIVE_USER_KEY = 'minesPredictorActiveUser';
@@ -19,6 +20,9 @@ const App: React.FC = () => {
     const [infoMessage, setInfoMessage] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState<boolean>(false);
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
     
     // State to track login attempts from localStorage
     const [loginAttempts, setLoginAttempts] = useState<Record<string, number>>(() => {
@@ -30,6 +34,19 @@ const App: React.FC = () => {
             return {};
         }
     });
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const loadUserFromStorage = useCallback(async () => {
         const activeUserId = localStorage.getItem(ACTIVE_USER_KEY);
@@ -177,23 +194,38 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-            <header className="flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10">
-                <h1 className={`text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 ${isPredictorPageActive ? 'opacity-0' : 'opacity-100'}`}>
+            <header className="relative flex justify-between items-center mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10">
+                <div className="relative" ref={menuRef}>
+                    <button
+                        onClick={() => setIsMenuOpen(prev => !prev)}
+                        className="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                        aria-label="Open menu"
+                    >
+                        <MenuIcon className="h-6 w-6 text-white"/>
+                    </button>
+                    {isMenuOpen && (
+                        <div className="absolute left-0 mt-2 w-56 p-2 space-y-1 origin-top-left glassmorphic-card gradient-border rounded-lg shadow-lg z-50">
+                            <button
+                                onClick={() => { handleToggleTestPage(); setIsMenuOpen(false); }}
+                                className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10 transition-colors flex items-center gap-3"
+                            >
+                                <span role="img" aria-label="test tube">🧪</span> Test Postback
+                            </button>
+                            <button
+                                onClick={() => { handleToggleGuide(); setIsMenuOpen(false); }}
+                                className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10 transition-colors flex items-center gap-3"
+                            >
+                                <span role="img" aria-label="book">📖</span> Setup Guide
+                            </button>
+                        </div>
+                    )}
+                </div>
+                
+                <h1 className={`absolute left-1/2 -translate-x-1/2 text-2xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 pointer-events-none ${isPredictorPageActive ? 'opacity-0' : 'opacity-100'}`}>
                     Mines Predictor Pro
                 </h1>
-                <div className="flex items-center flex-wrap gap-3">
-                     <button
-                        onClick={handleToggleTestPage}
-                        className="btn text-sm"
-                    >
-                        {showTestPage ? 'Hide Tester' : 'Test Postback'}
-                    </button>
-                     <button
-                        onClick={handleToggleGuide}
-                        className="btn text-sm"
-                    >
-                        {showGuide ? 'Hide Guide' : 'Setup Guide'}
-                    </button>
+
+                <div className="flex items-center">
                     {user && (
                         <button
                             onClick={handleLogout}

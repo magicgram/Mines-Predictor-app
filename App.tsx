@@ -6,6 +6,11 @@ import TestPage from './components/TestPage';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 
+// Local storage keys
+const ACTIVE_USER_KEY = 'minesPredictorActiveUser';
+const USER_DATA_KEY_PREFIX = 'minesPredictorUser:';
+
+
 const App: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,21 +31,25 @@ const App: React.FC = () => {
     });
 
     const loadUserFromStorage = useCallback(async () => {
-        const storedUser = localStorage.getItem('minesPredictorUser');
-        if (storedUser) {
-            const parsedUser: User = JSON.parse(storedUser);
-            if (parsedUser.awaitingDeposit) {
-                const result = await verificationService.verifyRedeposit(parsedUser.id, parsedUser.knownRedeposits);
-                if (result.success && result.newRedepositCount !== undefined) {
-                    const updatedUser = { ...parsedUser, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.newRedepositCount };
-                    localStorage.setItem('minesPredictorUser', JSON.stringify(updatedUser));
-                    setUser(updatedUser);
-                    alert("Deposit successful! You have 15 new predictions.");
+        const activeUserId = localStorage.getItem(ACTIVE_USER_KEY);
+        if (activeUserId) {
+            const storedUserJSON = localStorage.getItem(`${USER_DATA_KEY_PREFIX}${activeUserId}`);
+            if (storedUserJSON) {
+                const parsedUser: User = JSON.parse(storedUserJSON);
+                
+                if (parsedUser.awaitingDeposit) {
+                    const result = await verificationService.verifyRedeposit(parsedUser.id, parsedUser.knownRedeposits);
+                    if (result.success && result.newRedepositCount !== undefined) {
+                        const updatedUser = { ...parsedUser, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.newRedepositCount };
+                        localStorage.setItem(`${USER_DATA_KEY_PREFIX}${updatedUser.id}`, JSON.stringify(updatedUser));
+                        setUser(updatedUser);
+                        alert("Deposit successful! You have 15 new predictions.");
+                    } else {
+                        setUser(parsedUser);
+                    }
                 } else {
                     setUser(parsedUser);
                 }
-            } else {
-                setUser(parsedUser);
             }
         }
         setIsLoading(false);
@@ -56,10 +65,49 @@ const App: React.FC = () => {
         setInfoMessage(null);
         const result = await verificationService.verifyInitialLogin(userId);
         
-        if (result.success) {
-            const newUser: User = { id: userId, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.redepositCount || 0 };
-            localStorage.setItem('minesPredictorUser', JSON.stringify(newUser));
-            setUser(newUser);
+        if (result.success && result.redepositCount !== undefined) {
+            const apiRedepositCount = result.redepositCount;
+            const userStorageKey = `${USER_DATA_KEY_PREFIX}${userId}`;
+            const storedUserJSON = localStorage.getItem(userStorageKey);
+            let userToActivate: User;
+
+            if (storedUserJSON) {
+                // User has logged in on this device before.
+                const storedUser: User = JSON.parse(storedUserJSON);
+
+                if (apiRedepositCount > storedUser.knownRedeposits) {
+                    // Re-deposit detected! Reset prediction count.
+                    userToActivate = { 
+                        ...storedUser, 
+                        predictionCount: 0, 
+                        awaitingDeposit: false, 
+                        knownRedeposits: apiRedepositCount 
+                    };
+                    alert("New deposit confirmed! Your prediction count has been reset.");
+                } else {
+                    // No new deposit, just logging in again. Preserve prediction count.
+                    userToActivate = {
+                        ...storedUser,
+                        awaitingDeposit: false, // Ensure this is reset on login
+                        knownRedeposits: apiRedepositCount // Sync count just in case
+                    };
+                }
+            } else {
+                // First time this user is logging in on this device.
+                userToActivate = { 
+                    id: userId, 
+                    predictionCount: 0, 
+                    awaitingDeposit: false, 
+                    knownRedeposits: apiRedepositCount 
+                };
+            }
+
+            // Save the user's persistent state
+            localStorage.setItem(userStorageKey, JSON.stringify(userToActivate));
+            // Set the active user for the session
+            localStorage.setItem(ACTIVE_USER_KEY, userId);
+            // Update React state
+            setUser(userToActivate);
 
             // On successful login, clear the attempt counter for this user
             const updatedAttempts = { ...loginAttempts };
@@ -95,13 +143,15 @@ const App: React.FC = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('minesPredictorUser');
+        // Only remove the active session key, not the user's data
+        localStorage.removeItem(ACTIVE_USER_KEY);
         setUser(null);
     };
 
     const updateUser = (updatedUser: User) => {
         setUser(updatedUser);
-        localStorage.setItem('minesPredictorUser', JSON.stringify(updatedUser));
+        // Save the updated user data to their specific storage key
+        localStorage.setItem(`${USER_DATA_KEY_PREFIX}${updatedUser.id}`, JSON.stringify(updatedUser));
     };
 
     const handleToggleGuide = () => {

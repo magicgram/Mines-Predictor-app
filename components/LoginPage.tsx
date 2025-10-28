@@ -45,10 +45,18 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                             placeholder="12345678"
                             className="form-input"
                             required
+                            disabled={isLoading}
                         />
                     </div>
 
-                    {infoMessage && (
+                    {isLoading && (
+                        <div className="flex items-center p-4 bg-black/30 border border-blue-500/50 rounded-lg text-sm space-x-3">
+                            <span className="text-lg">🔍</span>
+                            <p className="text-blue-300">Checking your registration status...</p>
+                        </div>
+                    )}
+
+                    {infoMessage && !isLoading && (
                          <div className="p-4 bg-black/30 border border-purple-500/50 rounded-lg text-sm space-y-3">
                              {infoMessage.split('\n').map((line, index) => {
                                  const trimmedLine = line.trim();
@@ -66,7 +74,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                          </div>
                      )}
 
-                    {error && 
+                    {error && !isLoading && 
                         <div className="flex items-start p-4 bg-red-900/40 border border-red-500/50 rounded-lg text-sm space-x-3">
                              <span className="text-lg text-red-400 mt-1">❌</span>
                              <p className="text-red-300 whitespace-pre-wrap flex-1">{error}</p>

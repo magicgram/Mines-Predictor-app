@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
@@ -210,7 +211,7 @@ const App: React.FC = () => {
                         <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
                     ) : (
                         <>
-                            <h2 className="text-4xl sm:text-5xl font-bold text-white text-center mb-8 font-['Orbitron']" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.4)'}}>
+                            <h2 className="text-4xl sm:text-5xl font-bold shimmer-text text-center mb-8 font-['Orbitron']" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.4)'}}>
                                 Mines Predictor Pro
                             </h2>
                             <PredictorPage user={user} onUpdateUser={updateUser} />

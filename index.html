@@ -107,17 +107,18 @@
             z-index: 1;
         }
 
-        /* Primary button style (Continue, Register Here, etc.) - styled like form-input */
+        /* Primary button style (Continue, Register Here, etc.) */
         .btn-dark {
             color: var(--text-primary);
-            background-color: #383258; /* Solid dark purple-gray, matches new input */
-            border: 1px solid rgba(0, 0, 0, 0.4);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            background-color: rgba(26, 32, 44, 0.7);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-dark:hover:not(:disabled) {
-            background-color: #453e6b; /* Lighter on hover */
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 0 15px var(--glow-cyan); /* Deeper inset + glow */
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-cyan);
         }
 
         /* Guide button in the header */
@@ -136,11 +137,11 @@
         
         .btn-dark:disabled {
             cursor: not-allowed;
-            transform: none;
+            background-color: rgba(26, 32, 44, 0.4);
+            border-color: rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
-            background-color: #2a254a;
-            border-color: rgba(0, 0, 0, 0.6);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            transform: none;
+            box-shadow: none;
             opacity: 0.6;
         }
 

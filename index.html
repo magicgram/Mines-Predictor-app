@@ -110,15 +110,15 @@
         /* Primary button style (Continue, Register Here, etc.) */
         .btn-dark {
             color: var(--text-primary);
-            background-color: rgba(26, 32, 44, 0.7);
+            background-color: rgba(10, 5, 24, 0.65); /* Darker, consistent with inputs */
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6); /* Key change: inset shadow for depth */
         }
 
         .btn-dark:hover:not(:disabled) {
-            transform: translateY(-2px);
+            transform: translateY(-1px); /* subtle feedback */
             border-color: var(--accent-cyan);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-cyan);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 12px var(--glow-cyan); /* maintain inset, add glow */
         }
 
         /* Guide button in the header */
@@ -149,19 +149,21 @@
             width: 100%;
             padding: 0.85rem 1rem;
             color: var(--text-primary);
-            background-color: #383258; /* Solid dark purple-gray from image */
-            border: 1px solid rgba(0, 0, 0, 0.4);
+            background-color: rgba(10, 5, 24, 0.6); /* Dark semi-transparent background */
+            border: 2px solid rgba(0, 212, 255, 0.7); /* Bright glowing border */
             border-radius: 0.75rem; /* ~12px */
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            /* Inset shadow for depth + outer glow for effect */
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), 0 0 8px rgba(0, 212, 255, 0.4);
         }
         .form-input::placeholder {
             color: var(--text-secondary);
         }
         .form-input:focus {
             outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 0 10px var(--glow-cyan);
+            border-color: var(--accent-cyan); /* Make border solid on focus */
+            /* Intensify glow on focus */
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6), 0 0 15px var(--glow-cyan);
         }
 
     </style>

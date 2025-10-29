@@ -105,44 +105,50 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-        }
-
-        /* Primary button style (Continue, Register Here, etc.) */
-        .btn-dark {
+            border: none; /* All buttons will be borderless by default now */
+            background-color: #0c0519; /* Dark inner color from image */
             color: var(--text-primary);
-            background-color: rgba(10, 5, 24, 0.65); /* Darker, consistent with inputs */
-            border: 1px solid var(--border-color);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6); /* Key change: inset shadow for depth */
         }
 
-        .btn-dark:hover:not(:disabled) {
-            transform: translateY(-1px); /* subtle feedback */
-            border-color: var(--accent-cyan);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 12px var(--glow-cyan); /* maintain inset, add glow */
+        /* The glowing border effect for primary buttons */
+        .btn-dark::before, .btn-guide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: inherit; /* Match the button's border-radius */
+            padding: 2px; /* This creates the border thickness */
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-cyan));
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box, /* This is the "hole" for the content */
+                linear-gradient(#fff 0 0); /* This is the outer shape */
+            -webkit-mask-composite: xor;
+            mask-composite: exclude; /* Punch out the content area, leaving only the border */
+            z-index: -1;
+            transition: all 0.3s ease;
         }
 
-        /* Guide button in the header */
-        .btn-guide {
-            background: linear-gradient(100deg, #a855f7, var(--accent-cyan));
-            color: white;
-            font-weight: 600;
-            border: none;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.6), 0 0 15px var(--glow-cyan);
-        }
-
-        .btn-guide:hover {
+        /* Hover effect for all buttons */
+        .btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8), 0 0 25px var(--glow-cyan);
+            background-color: #1a0f30; /* Slightly lighter on hover */
         }
         
-        .btn-dark:disabled {
+        .btn:hover:not(:disabled)::before {
+            filter: brightness(1.2) drop-shadow(0 0 6px var(--glow-magenta)) drop-shadow(0 0 6px var(--glow-cyan)); /* Intensify glow on hover */
+        }
+        
+        /* Disabled state for all buttons */
+        .btn:disabled, .btn-dark:disabled {
             cursor: not-allowed;
             background-color: rgba(26, 32, 44, 0.4);
-            border-color: rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
             transform: none;
-            box-shadow: none;
             opacity: 0.6;
+        }
+        
+        .btn:disabled::before, .btn-dark:disabled::before {
+            display: none; /* Hide glow on disabled buttons */
         }
 
         .form-input {

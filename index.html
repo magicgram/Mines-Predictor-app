@@ -105,21 +105,19 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            border: none;
         }
 
         /* Primary button style (Continue, Register Here, etc.) - styled like form-input */
         .btn-dark {
             color: var(--text-primary);
-            background: linear-gradient(#1a1a2e, #1a1a2e) padding-box,
-                        linear-gradient(145deg, var(--accent-cyan), var(--accent-magenta)) border-box;
-            border: 1px solid transparent;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Soft inner shadow */
+            background-color: #383258; /* Solid dark purple-gray, matches new input */
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .btn-dark:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 0 15px var(--glow-cyan), 0 0 15px var(--glow-magenta);
+            background-color: #453e6b; /* Lighter on hover */
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 0 15px var(--glow-cyan); /* Deeper inset + glow */
         }
 
         /* Guide button in the header */
@@ -140,28 +138,29 @@
             cursor: not-allowed;
             transform: none;
             color: var(--text-secondary);
-            background: linear-gradient(#212332, #212332) padding-box,
-                        linear-gradient(145deg, #4A5568, #3a475a) border-box;
+            background-color: #2a254a;
+            border-color: rgba(0, 0, 0, 0.6);
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 0.6;
         }
 
         .form-input {
             width: 100%;
             padding: 0.85rem 1rem;
             color: var(--text-primary);
-            background: linear-gradient(#1a1a2e, #1a1a2e) padding-box,
-                        linear-gradient(145deg, var(--accent-cyan), var(--accent-magenta)) border-box;
-            border: 1px solid transparent;
+            background-color: #383258; /* Solid dark purple-gray from image */
+            border: 1px solid rgba(0, 0, 0, 0.4);
             border-radius: 0.75rem; /* ~12px */
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Soft inner shadow */
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
         .form-input::placeholder {
-            color: #aaaaaa;
+            color: var(--text-secondary);
         }
         .form-input:focus {
             outline: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 0 15px var(--glow-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 0 10px var(--glow-cyan);
         }
 
     </style>

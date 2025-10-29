@@ -15,9 +15,9 @@ const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
 
         switch (state) {
             case 'star':
-                return `${baseClasses} bg-gradient-to-br from-yellow-400 to-orange-500 transform scale-105 shadow-orange-500/50 shadow-lg`;
+                return `${baseClasses} bg-gradient-to-br from-yellow-400 to-orange-500 shadow-orange-500/50 shadow-lg`;
             case 'bomb':
-                return `${baseClasses} bg-gradient-to-br from-red-600 to-rose-800 transform scale-105 shadow-rose-500/50 shadow-lg`;
+                return `${baseClasses} bg-gradient-to-br from-red-600 to-rose-800 shadow-rose-500/50 shadow-lg`;
             case 'hidden':
             default:
                 return `${baseClasses} bg-[#3d4a99] cursor-pointer hover:bg-[#4c5aaf]`;

@@ -106,43 +106,49 @@
             border: none;
         }
 
-        .btn-dark {
-            background-color: var(--bg-secondary);
+        .btn-dark,
+        .btn-guide {
+            background-color: #1A113A; /* Dark purple background from screenshots */
             color: var(--text-primary);
             border: 1px solid transparent;
             background-clip: padding-box;
+            /* Add a permanent glow and inset shadow for depth */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 
+                        0 0 10px rgba(224, 40, 199, 0.4), 
+                        0 0 10px rgba(0, 212, 255, 0.4);
         }
 
-        .btn-dark::before {
-             content: '';
+        .btn-dark::before,
+        .btn-guide::before {
+            content: '';
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
             z-index: -1;
-            margin: -1px;
+            margin: -1px; /* Creates the border inside the padding box */
             border-radius: inherit;
             background: linear-gradient(145deg, var(--accent-magenta), var(--accent-cyan));
+            transition: background 0.3s ease;
         }
 
-        .btn-dark:hover {
+        .btn-dark:hover,
+        .btn-guide:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--glow-magenta), 0 0 15px var(--glow-cyan);
+            /* Intensify glow on hover */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 
+                        0 0 20px var(--glow-magenta), 
+                        0 0 20px var(--glow-cyan);
         }
 
         .btn-dark:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Keep inset shadow, remove glow */
         }
-
-        .btn-guide {
-             background: linear-gradient(145deg, var(--accent-magenta), var(--accent-cyan));
-             color: white;
-             box-shadow: 0 0 20px var(--glow-cyan), 0 0 10px var(--glow-magenta);
-        }
-        .btn-guide:hover {
-             transform: translateY(-2px) scale(1.05);
-             filter: brightness(1.1);
+        
+        /* Make disabled state visually distinct by dulling the gradient border */
+        .btn-dark:disabled::before {
+            background: linear-gradient(145deg, #4A5568, #2D3748);
         }
 
         .form-input {

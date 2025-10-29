@@ -1,89 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CopyIcon from './icons/CopyIcon';
 
-const Step: React.FC<{ number: number; title: string; children: React.ReactNode }> = ({ number, title, children }) => (
-    <div>
-        <h3 className="flex items-center text-xl font-semibold text-white mb-3 font-['Orbitron']">
-            <span className="flex items-center justify-center w-8 h-8 mr-4 bg-gradient-to-br from-accent-cyan to-accent-magenta text-black rounded-full font-bold">{number}</span>
-            {title}
-        </h3>
-        <div className="pl-12 border-l-2 border-white/10 ml-4">
-            <div className="prose prose-invert text-text-secondary max-w-none space-y-3">
-                {children}
-            </div>
+const Step: React.FC<{ number: number; children: React.ReactNode }> = ({ number, children }) => (
+    <div className="flex items-start space-x-4">
+        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 mr-2 bg-gradient-to-br from-accent-cyan to-accent-magenta text-black rounded-full font-bold text-lg">
+            {number}
         </div>
+        <p className="text-text-secondary text-lg mt-0.5">{children}</p>
     </div>
 );
 
+const PromoCode: React.FC = () => {
+    const [copied, setCopied] = useState(false);
+    const promoCode = "FSS23";
 
-const PostbackGuide: React.FC = () => {
-    const postbackEndpoint = "/api/postback";
-    const params = "?user_id={id}&status={status}&fdp_usd={fdp_usd}&dep_sum_usd={dep_sum_usd}";
+    const handleCopy = () => {
+        navigator.clipboard.writeText(promoCode).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+        });
+    };
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
+        <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 mr-2 bg-gradient-to-br from-accent-cyan to-accent-magenta text-black rounded-full font-bold text-lg">
+                4
+            </div>
+            <div className="text-text-secondary text-lg mt-0.5 flex-grow">
+                <p>Use Specify Promocode during registration:</p>
+                <div className="mt-2 flex items-center bg-black/40 p-2 rounded-lg border border-white/20 w-max">
+                    <span className="font-mono text-xl text-yellow-300 mr-4">{promoCode}</span>
+                    <button 
+                        onClick={handleCopy}
+                        className="p-2 rounded-md hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                        aria-label="Copy promocode"
+                    >
+                        {copied ? (
+                           <span className="text-green-400 text-sm font-semibold">Copied!</span>
+                        ) : (
+                           <CopyIcon className="h-5 w-5 text-gray-400" />
+                        )}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const PostbackGuide: React.FC = () => {
+    return (
+        <div className="w-full max-w-2xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold shimmer-text mb-2">
-                    1Win Affiliate Postback Setup
+                    How To Get Access?
                 </h2>
-                <p className="text-text-secondary">Connect your affiliate account for automated user verification.</p>
+                <p className="text-text-secondary">Follow these steps to unlock the predictor.</p>
             </div>
             
-            <div className="space-y-8">
-                <Step number={1} title="Deploy to Vercel">
-                    <p>First, deploy this project from your GitHub repository to Vercel. After deploying, Vercel provides a public URL (e.g., <code className="text-yellow-300 bg-black/30 px-1.5 py-0.5 rounded text-xs">your-project.vercel.app</code>). This is your base URL.</p>
-                </Step>
-
-                <Step number={2} title="Connect Vercel KV Database">
-                     <p>In your Vercel project's "Storage" tab, find and create a new <strong>Vercel KV (powered by Upstash)</strong> database. Choose a region close to your users. This step is mandatory for storing user data.</p>
-                </Step>
-                
-                <Step number={3} title="Set Environment Variables">
-                    <p>
-                        In your Vercel project's "Settings" → "Environment Variables", you must add your affiliate link and a password to protect the testing page.
-                    </p>
-                    <div className="mt-3 bg-black/40 p-4 rounded-lg border border-white/20 space-y-4">
-                        <div>
-                             <pre className="font-mono text-sm text-left">
-                                <code className="text-cyan-400">VITE_AFFILIATE_LINK</code>=<code className="text-yellow-400">"https://1waff.com/?p=YOUR_CODE"</code>
-                            </pre>
-                            <p className="text-text-secondary text-xs mt-2">
-                                This is critical. If not set, registration and deposit links will fail.
-                            </p>
-                        </div>
-                         <div>
-                             <pre className="font-mono text-sm text-left">
-                                <code className="text-cyan-400">VITE_TEST_PAGE_PASSWORD</code>=<code className="text-yellow-400">"your_secure_password"</code>
-                            </pre>
-                            <p className="text-text-secondary text-xs mt-2">
-                                Set a password to protect the Postback Testing Tool. The default is "admin".
-                            </p>
-                        </div>
-                    </div>
-                </Step>
-
-                <Step number={4} title="Create the Postback URL">
-                    <p>In your 1Win affiliate dashboard, go to the S2S settings and use the following URL for "First Deposit" and "Repeated Deposit" events:</p>
-                    <pre className="block bg-black/40 p-4 rounded-lg mt-3 text-sm text-yellow-300 break-all border border-white/20">
-                        <code>
-                            <span className="text-gray-400">[Your Vercel URL]</span>
-                            <span className="text-cyan-400">{postbackEndpoint}</span>
-                            <span className="text-purple-400">{params}</span>
-                        </code>
-                    </pre>
-                    <p className="text-text-secondary text-xs mt-2">
-                        Replace <code className="text-yellow-300 bg-black/30 px-1.5 py-0.5 rounded text-xs">{'[Your Vercel URL]'}</code> with your actual URL from Step 1.
-                    </p>
-                </Step>
-
-                <Step number={5} title="How It Works">
-                     <ul className="list-disc list-inside space-y-2">
-                        <li>When a user deposits, 1Win sends data to your Vercel URL.</li>
-                        <li>Your backend (<code className="text-yellow-300 bg-black/30 px-1.5 py-0.5 rounded text-xs">/api/postback.ts</code>) saves this data to your Vercel KV database.</li>
-                        <li>The backend validates the first deposit (<code className="text-yellow-300 bg-black/30 px-1.5 py-0.5 rounded text-xs">{`{fdp_usd}`}</code>) is ≥ $5.</li>
-                        <li>It also validates repeated deposits (<code className="text-yellow-300 bg-black/30 px-1.5 py-0.5 rounded text-xs">{`{dep_sum_usd}`}</code>) are ≥ $4.</li>
-                        <li>The app then verifies the user's ID against the database to grant access.</li>
-                    </ul>
-                </Step>
+            <div className="space-y-6">
+                <Step number={1}>Click on the 'Register Here' Button</Step>
+                <Step number={2}>Create Your Account Using The 'Register Here' Button</Step>
+                <Step number={3}>Your Account Must Be New</Step>
+                <PromoCode />
             </div>
         </div>
     );

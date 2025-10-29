@@ -65,6 +65,27 @@ const AccessGuide: React.FC = () => {
                 <Step number={3}>Your Account Must Be New</Step>
                 <PromoCode />
             </div>
+
+            <div className="relative my-8">
+                <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div className="w-full border-t border-white/20" />
+                </div>
+                <div className="relative flex justify-center">
+                    <span className="bg-bg-secondary px-4 text-sm font-semibold text-text-secondary rounded-full tracking-widest uppercase shadow-md">
+                        THEN
+                    </span>
+                </div>
+            </div>
+
+            <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-white flex items-center">
+                    <span className="mr-3 text-3xl">📝</span> How to find Player ID?
+                </h3>
+                <Step number={1}>Login to Mostbet account</Step>
+                <Step number={2}>Go to Profile Settings</Step>
+                <Step number={3}>Copy Player ID number</Step>
+                <Step number={4}>Paste it on Players I'd section.</Step>
+            </div>
         </div>
     );
 };

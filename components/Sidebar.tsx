@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { User } from '../types';
 import CloseIcon from './icons/CloseIcon';
@@ -9,7 +10,6 @@ import DashboardIcon from './icons/DashboardIcon';
 interface SidebarProps {
     isOpen: boolean;
     onClose: () => void;
-    onShowGuide: () => void;
     onShowTestPage: () => void;
     onShowDashboard: () => void;
     onProfilePictureChange: (url: string) => void;
@@ -27,7 +27,7 @@ const NavLink: React.FC<{ onClick: () => void; icon: React.ReactNode; text: stri
     </a>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowTestPage, onShowDashboard, user, onProfilePictureChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onShowDashboard, user, onProfilePictureChange }) => {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -108,11 +108,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowGuide, onShowT
                             onClick={onShowTestPage}
                             icon={<TestIcon className="h-6 w-6 text-gray-400 group-hover:text-accent-cyan transition-colors" />}
                             text="Test Postback"
-                        />
-                        <NavLink 
-                            onClick={onShowGuide}
-                            icon={<GuideIcon className="h-6 w-6 text-gray-400 group-hover:text-accent-cyan transition-colors" />}
-                            text="Setup Guide"
                         />
                     </nav>
                 </div>

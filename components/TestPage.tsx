@@ -1,6 +1,11 @@
+
 import React, { useState } from 'react';
 
-const TestPage: React.FC = () => {
+interface TestPageProps {
+    onShowGuide: () => void;
+}
+
+const TestPage: React.FC<TestPageProps> = ({ onShowGuide }) => {
     const [userId, setUserId] = useState('testuser123');
     const [isLoading, setIsLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState<string | null>(null);
@@ -88,8 +93,29 @@ const TestPage: React.FC = () => {
                     Test Re-Deposit ($5)
                 </button>
             </div>
+            
+            <div className="space-y-4 pt-6 mt-6 border-t border-white/20">
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full " />
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="bg-bg-secondary px-3 text-sm text-text-secondary rounded-full">
+                            Need Help?
+                        </span>
+                    </div>
+                </div>
+                
+                <button
+                    onClick={onShowGuide}
+                    type="button"
+                    className="w-full max-w-sm mx-auto btn"
+                >
+                    Setup Guide
+                </button>
+            </div>
 
-            <div className="mt-6 min-h-[100px] bg-black/40 p-4 rounded-lg border border-white/10 font-mono">
+            <div className="mt-8 min-h-[100px] bg-black/40 p-4 rounded-lg border border-white/10 font-mono">
                 {isLoading && (
                     <div className="flex items-center justify-center p-4">
                         <div className="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-accent-cyan"></div>

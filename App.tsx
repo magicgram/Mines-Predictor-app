@@ -199,7 +199,6 @@ const App: React.FC = () => {
             <Sidebar
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
-                onShowGuide={handleShowGuide}
                 onShowTestPage={handleShowTestPage}
                 onShowDashboard={handleShowDashboard}
                 onProfilePictureChange={handleProfilePictureChange}
@@ -247,7 +246,7 @@ const App: React.FC = () => {
             </header>
 
             <main className="main-content">
-                {showTestPage ? <TestPage /> : showGuide ? <PostbackGuide /> : (
+                {showTestPage ? <TestPage onShowGuide={handleShowGuide} /> : showGuide ? <PostbackGuide /> : (
                     !user ? (
                         <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
                     ) : (

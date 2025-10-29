@@ -39,15 +39,25 @@ const PostbackGuide: React.FC = () => {
                 
                 <Step number={3} title="Set Environment Variables">
                     <p>
-                        In your Vercel project's "Settings" → "Environment Variables", you must add your affiliate link.
+                        In your Vercel project's "Settings" → "Environment Variables", you must add your affiliate link and a password to protect the testing page.
                     </p>
-                    <div className="mt-3 bg-black/40 p-4 rounded-lg border border-white/20">
-                        <pre className="font-mono text-sm text-left">
-                            <code className="text-cyan-400">VITE_AFFILIATE_LINK</code>=<code className="text-yellow-400">"https://1waff.com/?p=YOUR_CODE"</code>
-                        </pre>
-                        <p className="text-text-secondary text-xs mt-2">
-                            This is critical. If not set, registration and deposit links will fail.
-                        </p>
+                    <div className="mt-3 bg-black/40 p-4 rounded-lg border border-white/20 space-y-4">
+                        <div>
+                             <pre className="font-mono text-sm text-left">
+                                <code className="text-cyan-400">VITE_AFFILIATE_LINK</code>=<code className="text-yellow-400">"https://1waff.com/?p=YOUR_CODE"</code>
+                            </pre>
+                            <p className="text-text-secondary text-xs mt-2">
+                                This is critical. If not set, registration and deposit links will fail.
+                            </p>
+                        </div>
+                         <div>
+                             <pre className="font-mono text-sm text-left">
+                                <code className="text-cyan-400">VITE_TEST_PAGE_PASSWORD</code>=<code className="text-yellow-400">"your_secure_password"</code>
+                            </pre>
+                            <p className="text-text-secondary text-xs mt-2">
+                                Set a password to protect the Postback Testing Tool. The default is "admin".
+                            </p>
+                        </div>
                     </div>
                 </Step>
 

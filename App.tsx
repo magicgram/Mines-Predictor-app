@@ -5,6 +5,7 @@ import PredictorPage from './components/PredictorPage';
 import PostbackGuide from './components/PostbackGuide';
 import TestPage from './components/TestPage';
 import Sidebar from './components/Sidebar';
+import PasswordModal from './components/PasswordModal';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 import MenuIcon from './components/icons/MenuIcon';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     const [showGuide, setShowGuide] = useState<boolean>(false);
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false); // State for password modal
 
     
     // State to track login attempts from localStorage
@@ -173,9 +175,14 @@ const App: React.FC = () => {
     };
 
     const handleShowTestPage = () => {
+        setIsMenuOpen(false);
+        setIsPasswordModalOpen(true);
+    };
+    
+    const handlePasswordSuccess = () => {
+        setIsPasswordModalOpen(false);
         setShowGuide(false);
         setShowTestPage(true);
-        setIsMenuOpen(false);
     };
 
     const handleShowDashboard = () => {
@@ -196,6 +203,11 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
+            <PasswordModal 
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onSuccess={handlePasswordSuccess}
+            />
             <Sidebar
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}

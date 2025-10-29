@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
-import PostbackGuide from './components/PostbackGuide';
+import AccessGuide from './components/AccessGuide';
+import SetupGuide from './components/PostbackGuide'; // Renamed logically, but file is PostbackGuide.tsx
 import TestPage from './components/TestPage';
 import Sidebar from './components/Sidebar';
 import PasswordModal from './components/PasswordModal';
@@ -20,7 +21,7 @@ const App: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [infoMessage, setInfoMessage] = useState<string | null>(null);
-    const [showGuide, setShowGuide] = useState<boolean>(false);
+    const [activeGuide, setActiveGuide] = useState<string | null>(null); // 'access', 'setup', or null
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false); // State for password modal
@@ -168,14 +169,20 @@ const App: React.FC = () => {
         }
     };
 
-    const handleShowGuide = () => {
+    const handleShowAccessGuide = () => {
         setShowTestPage(false);
-        setShowGuide(true);
+        setActiveGuide('access');
         setIsMenuOpen(false);
     };
+    
+    const handleShowSetupGuide = () => {
+        setShowTestPage(false);
+        setActiveGuide('setup');
+        setIsMenuOpen(false);
+    }
 
     const handleHideGuide = () => {
-        setShowGuide(false);
+        setActiveGuide(null);
         setIsMenuOpen(false);
     };
 
@@ -186,12 +193,12 @@ const App: React.FC = () => {
     
     const handlePasswordSuccess = () => {
         setIsPasswordModalOpen(false);
-        setShowGuide(false);
+        setActiveGuide(null);
         setShowTestPage(true);
     };
 
     const handleShowDashboard = () => {
-        setShowGuide(false);
+        setActiveGuide(null);
         setShowTestPage(false);
         setIsMenuOpen(false);
     };
@@ -204,7 +211,24 @@ const App: React.FC = () => {
         );
     }
     
-    const isPredictorPageActive = user && !showGuide && !showTestPage;
+    const isGuideVisible = activeGuide !== null;
+    const isPredictorPageActive = user && !isGuideVisible && !showTestPage;
+
+    const renderContent = () => {
+        if (showTestPage) return <TestPage onShowSetupGuide={handleShowSetupGuide} />;
+        if (activeGuide === 'access') return <AccessGuide />;
+        if (activeGuide === 'setup') return <SetupGuide />;
+        if (!user) return <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />;
+        
+        return (
+            <>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold shimmer-text text-center mb-8 font-['Orbitron']" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.4)'}}>
+                    Mines Predictor Pro
+                </h2>
+                <PredictorPage user={user} onUpdateUser={updateUser} />
+            </>
+        );
+    };
 
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8">
@@ -252,7 +276,7 @@ const App: React.FC = () => {
                             Logout
                         </button>
                     ) : (
-                         showGuide ? (
+                         isGuideVisible ? (
                             <button
                                 onClick={handleHideGuide}
                                 className="btn text-sm"
@@ -261,7 +285,7 @@ const App: React.FC = () => {
                             </button>
                          ) : (
                             <button
-                                onClick={handleShowGuide}
+                                onClick={handleShowAccessGuide}
                                 className="btn text-sm"
                             >
                                 Guide
@@ -272,18 +296,7 @@ const App: React.FC = () => {
             </header>
 
             <main className="main-content">
-                {showTestPage ? <TestPage onShowGuide={handleShowGuide} /> : showGuide ? <PostbackGuide /> : (
-                    !user ? (
-                        <LoginPage onLogin={handleLogin} error={error} isLoading={isLoading} infoMessage={infoMessage} />
-                    ) : (
-                        <>
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold shimmer-text text-center mb-8 font-['Orbitron']" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.4)'}}>
-                                Mines Predictor Pro
-                            </h2>
-                            <PredictorPage user={user} onUpdateUser={updateUser} />
-                        </>
-                    )
-                )}
+                {renderContent()}
             </main>
         </div>
     );

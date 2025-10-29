@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 
 interface TestPageProps {
-    onShowGuide: () => void;
+    onShowSetupGuide: () => void;
 }
 
-const TestPage: React.FC<TestPageProps> = ({ onShowGuide }) => {
+const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
     const [userId, setUserId] = useState('testuser123');
     const [isLoading, setIsLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState<string | null>(null);
@@ -107,7 +107,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowGuide }) => {
                 </div>
                 
                 <button
-                    onClick={onShowGuide}
+                    onClick={onShowSetupGuide}
                     type="button"
                     className="w-full max-w-sm mx-auto btn"
                 >

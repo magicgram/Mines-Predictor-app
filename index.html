@@ -46,6 +46,11 @@
             from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        @keyframes shimmer-animation {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -67,12 +72,13 @@
 
         .shimmer-text {
             font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(90deg, var(--accent-magenta), var(--accent-cyan));
-            background-size: 100% auto;
+            background: linear-gradient(90deg, var(--accent-magenta), var(--accent-cyan), var(--accent-magenta));
+            background-size: 200% auto;
             color: #fff;
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shimmer-animation 4s linear infinite;
         }
         
         .loading-spinner {

@@ -11,16 +11,19 @@ interface MineGridProps {
 const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
     
     const getCellClasses = (state: GridCellState) => {
-        const baseClasses = 'w-full h-full rounded-md flex items-center justify-center transition-all duration-300 shadow-[inset_0px_3px_6px_rgba(0,0,0,0.4)]';
+        const baseClasses = 'w-full h-full rounded-lg flex items-center justify-center transition-all duration-300';
 
         switch (state) {
             case 'star':
-                return `${baseClasses} bg-gradient-to-br from-yellow-400 to-orange-500 shadow-orange-500/50 shadow-lg`;
+                // Bright yellow/orange with a subtle inner shadow to give it a "stamped" look
+                return `${baseClasses} bg-gradient-to-b from-yellow-400 to-orange-400 shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]`;
             case 'bomb':
-                return `${baseClasses} bg-gradient-to-br from-red-600 to-rose-800 shadow-rose-500/50 shadow-lg`;
+                // A simple dark cell, almost transparent to show the grid background, as seen in the image
+                return `${baseClasses} bg-black/20`;
             case 'hidden':
             default:
-                return `${baseClasses} bg-[#3d4a99] cursor-pointer hover:bg-[#4c5aaf]`;
+                // The indented button look from the screenshot
+                return `${baseClasses} bg-[#3d4a99] shadow-[inset_0px_4px_8px_rgba(0,0,0,0.4)] cursor-pointer hover:bg-[#4c5aaf]`;
         }
     };
 
@@ -32,7 +35,7 @@ const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
                 return <StarIcon />;
             case 'hidden':
             default:
-                // This creates the dark circle for hidden cells, now matching icon size
+                // This creates the dark, indented circle inside the hidden cells
                 return <div className="w-10 h-10 bg-black/20 rounded-full shadow-[inset_0px_2px_4px_rgba(0,0,0,0.5)]"></div>;
         }
     };

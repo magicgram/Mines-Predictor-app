@@ -28,15 +28,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="w-full max-w-md p-8 space-y-6 glassmorphic-card gradient-border rounded-2xl shadow-2xl">
+            <div className="w-full max-w-md p-8 space-y-6 glassmorphic-card rounded-2xl shadow-2xl">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-white font-['Orbitron']">Unlock Predictions</h2>
-                    <p className="text-text-secondary mt-2">Enter your Player ID to synchronize.</p>
+                    <p className="text-gray-200 mt-2">Enter your Player ID to synchronize.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                         <label htmlFor="userId" className="text-sm font-medium text-text-secondary mb-2 block">Player ID</label>
+                         <label htmlFor="userId" className="text-sm font-medium text-gray-300 mb-2 block">Player ID</label>
                         <input
                             id="userId"
                             type="text"
@@ -85,7 +85,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full btn btn-primary"
+                            className="w-full btn btn-dark"
                         >
                             {isLoading ? (
                                 <div className="w-6 h-6 border-2 border-dashed rounded-full animate-spin border-white mx-auto"></div>
@@ -99,10 +99,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                 <div className="space-y-4 pt-4">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-white/20" />
+                            <div className="w-full border-t border-[rgba(255,255,255,0.3)]" />
                         </div>
-                        <div className="relative flex justify-center">
-                            <span className="bg-bg-secondary px-3 text-sm text-text-secondary rounded-full">
+                        <div className="relative flex justify-center text-sm">
+                            <span style={{background: 'linear-gradient(135deg, #b928e0, #5c6cff)'}} className="px-3 text-gray-200">
                                 I don't have account
                             </span>
                         </div>
@@ -111,7 +111,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                     <button
                         onClick={handleRegister}
                         type="button"
-                        className="w-full btn"
+                        className="w-full btn btn-dark"
                     >
                         Register Here
                     </button>

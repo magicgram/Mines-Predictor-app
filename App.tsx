@@ -246,7 +246,7 @@ const App: React.FC = () => {
                 user={user}
             />
             {/* Header updated to use CSS Grid for better responsiveness on mobile */}
-            <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 mb-10 p-4 rounded-xl bg-black/20 backdrop-blur-sm border-b border-white/10 z-10">
+            <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 mb-10 p-4 rounded-xl bg-[#161a27]/80 backdrop-blur-sm border-b border-white/10 z-10">
                 {/* Left: Menu Button */}
                 <div>
                     <button
@@ -271,7 +271,7 @@ const App: React.FC = () => {
                     {user ? (
                         <button
                             onClick={handleLogout}
-                            className="btn text-sm"
+                            className="btn btn-dark text-sm"
                         >
                             Logout
                         </button>
@@ -279,14 +279,14 @@ const App: React.FC = () => {
                          isGuideVisible ? (
                             <button
                                 onClick={handleHideGuide}
-                                className="btn text-sm"
+                                className="btn btn-dark text-sm"
                             >
                                 Hide
                             </button>
                          ) : (
                             <button
                                 onClick={handleShowAccessGuide}
-                                className="btn text-sm"
+                                className="btn btn-guide text-sm"
                             >
                                 Guide
                             </button>

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0d1117;
+            --bg-primary: #111217; /* Darker, more neutral background */
             --bg-secondary: #0A0518; /* Darker button background */
             --accent-cyan: #00d4ff; /* Vibrant cyan */
             --accent-magenta: #e028c7; /* Vibrant magenta */
@@ -96,7 +96,7 @@
         /* Component Styles */
         .btn {
             padding: 0.8rem 1.5rem;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem; /* More rounded corners */
             font-weight: 600;
             text-align: center;
             transition: all 0.3s ease;
@@ -149,18 +149,18 @@
             width: 100%;
             padding: 0.85rem 1rem;
             color: var(--text-primary);
-            background: #2a214d;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
+            background: #1E193B; /* Darker purple */
+            border: 1px solid transparent; /* Transparent border to prevent layout shift on focus */
+            border-radius: 0.75rem; /* More rounded */
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Inset shadow for sunken look */
         }
         .form-input::placeholder {
-            color: #a0aec0;
+            color: #8b9cc0; /* Lighter/purplier placeholder */
         }
         .form-input:focus {
             outline: none;
-            border-color: var(--accent-cyan);
+            border-color: var(--accent-cyan); /* Show border on focus */
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 0 15px var(--glow-cyan);
         }
 

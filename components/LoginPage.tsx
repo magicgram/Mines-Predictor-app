@@ -99,10 +99,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                 <div className="space-y-4 pt-4">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-white/10" />
+                            <div className="w-full border-t border-gray-700" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span style={{ backgroundColor: '#5c50d5' }} className="px-3 text-gray-300">
+                            <span style={{ backgroundColor: '#4B369D' }} className="px-3 text-gray-300">
                                 I don't have account
                             </span>
                         </div>

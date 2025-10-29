@@ -32,8 +32,8 @@ const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
                 return <StarIcon />;
             case 'hidden':
             default:
-                // This creates the dark circle for hidden cells
-                return <div className="w-5 h-5 bg-black/20 rounded-full shadow-[inset_0px_2px_4px_rgba(0,0,0,0.5)]"></div>;
+                // This creates the dark circle for hidden cells, now matching icon size
+                return <div className="w-10 h-10 bg-black/20 rounded-full shadow-[inset_0px_2px_4px_rgba(0,0,0,0.5)]"></div>;
         }
     };
 

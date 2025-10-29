@@ -11,15 +11,15 @@
     <style>
         :root {
             --bg-primary: #0d1117;
-            --bg-secondary: #100a28;
-            --accent-cyan: #4a91ff;
-            --accent-magenta: #e028c7;
+            --bg-secondary: #0A0518; /* Darker button background */
+            --accent-cyan: #00d4ff; /* Vibrant cyan */
+            --accent-magenta: #e028c7; /* Vibrant magenta */
             --text-primary: #edf2f7;
             --text-secondary: #a0aec0;
-            --glow-cyan: rgba(74, 145, 255, 0.7);
+            --glow-cyan: rgba(0, 212, 255, 0.7);
             --glow-magenta: rgba(224, 40, 199, 0.7);
             --border-color: rgba(255, 255, 255, 0.15);
-            --card-bg: linear-gradient(135deg, #e028c7 0%, #4a91ff 100%);
+            --card-bg: linear-gradient(160deg, #e028c7 0%, #00d4ff 100%);
         }
 
         @keyframes border-glow {
@@ -67,8 +67,8 @@
 
         .shimmer-text {
             font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(90deg, var(--accent-magenta), #fff, var(--accent-cyan));
-            background-size: 200% auto;
+            background: linear-gradient(90deg, var(--accent-magenta), var(--accent-cyan));
+            background-size: 100% auto;
             color: #fff;
             background-clip: text;
             -webkit-background-clip: text;
@@ -143,11 +143,11 @@
             width: 100%;
             padding: 0.85rem 1rem;
             color: var(--text-primary);
-            background: #3d3b62;
-            border: 1px solid rgba(0,0,0,0.2);
+            background: #2a214d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
         .form-input::placeholder {
             color: #a0aec0;

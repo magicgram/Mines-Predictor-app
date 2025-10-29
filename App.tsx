@@ -246,7 +246,7 @@ const App: React.FC = () => {
                 user={user}
             />
             {/* Header updated to use CSS Grid for better responsiveness on mobile */}
-            <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 mb-10 p-4 rounded-xl bg-[#161a27]/80 backdrop-blur-sm border-b border-white/10 z-10">
+            <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 mb-10 p-4 rounded-xl bg-[#161a27] z-10">
                 {/* Left: Menu Button */}
                 <div>
                     <button
@@ -263,7 +263,7 @@ const App: React.FC = () => {
                     onClick={handleShowDashboard}
                     className={`text-center text-xl sm:text-3xl font-bold shimmer-text transition-opacity duration-300 truncate ${isPredictorPageActive ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer hover:opacity-80'}`}
                 >
-                    Mines Predictor Pro
+                    Mines Pre...
                 </h1>
 
                 {/* Right: Logout / Guide Button */}

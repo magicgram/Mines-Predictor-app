@@ -40,7 +40,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
+        <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card rounded-2xl shadow-2xl mb-8">
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold shimmer-text mb-2">
                     Postback Testing Tool
@@ -67,28 +67,28 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                 <button
                     onClick={() => handleTest({ status: 'registration' })}
                     disabled={isLoading}
-                    className="btn"
+                    className="btn btn-dark"
                 >
                     Test Registration
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '10' })}
                     disabled={isLoading}
-                    className="btn"
+                    className="btn btn-dark"
                 >
                     Test 1st Deposit ($10)
                 </button>
                  <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '2' })}
                     disabled={isLoading}
-                    className="btn"
+                    className="btn btn-dark"
                 >
                     Test Failed Deposit ($2)
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'dep', dep_sum_usd: '5' })}
                     disabled={isLoading}
-                    className="btn"
+                    className="btn btn-dark"
                 >
                     Test Re-Deposit ($5)
                 </button>
@@ -109,7 +109,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                 <button
                     onClick={onShowSetupGuide}
                     type="button"
-                    className="w-full max-w-sm mx-auto btn"
+                    className="w-full max-w-sm mx-auto btn btn-dark"
                 >
                     Setup Guide
                 </button>

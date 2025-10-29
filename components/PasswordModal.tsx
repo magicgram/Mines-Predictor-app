@@ -59,7 +59,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
         >
             <div 
                 ref={modalRef}
-                className="w-full max-w-sm p-8 space-y-6 glassmorphic-card gradient-border rounded-2xl shadow-2xl main-content"
+                className="w-full max-w-sm p-8 space-y-6 glassmorphic-card rounded-2xl shadow-2xl main-content"
             >
                 <div className="text-center">
                     <h2 id="password-modal-title" className="text-2xl font-bold text-white font-['Orbitron']">
@@ -94,13 +94,13 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-full btn"
+                            className="w-full btn btn-dark"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="w-full btn btn-primary"
+                            className="w-full btn btn-dark"
                         >
                             Submit
                         </button>

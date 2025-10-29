@@ -99,10 +99,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, error, isLoading, infoMe
                 <div className="space-y-4 pt-4">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-[rgba(255,255,255,0.3)]" />
+                            <div className="w-full border-t border-white/10" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span style={{background: 'linear-gradient(135deg, #b928e0, #5c6cff)'}} className="px-3 text-gray-200">
+                            <span style={{ backgroundColor: '#5c50d5' }} className="px-3 text-gray-300">
                                 I don't have account
                             </span>
                         </div>

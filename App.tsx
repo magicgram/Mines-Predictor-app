@@ -174,6 +174,11 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
     };
 
+    const handleHideGuide = () => {
+        setShowGuide(false);
+        setIsMenuOpen(false);
+    };
+
     const handleShowTestPage = () => {
         setIsMenuOpen(false);
         setIsPasswordModalOpen(true);
@@ -247,12 +252,21 @@ const App: React.FC = () => {
                             Logout
                         </button>
                     ) : (
-                         <button
-                            onClick={handleShowGuide}
-                            className="btn text-sm"
-                        >
-                            Guide
-                        </button>
+                         showGuide ? (
+                            <button
+                                onClick={handleHideGuide}
+                                className="btn text-sm"
+                            >
+                                Hide
+                            </button>
+                         ) : (
+                            <button
+                                onClick={handleShowGuide}
+                                className="btn text-sm"
+                            >
+                                Guide
+                            </button>
+                         )
                     )}
                 </div>
             </header>

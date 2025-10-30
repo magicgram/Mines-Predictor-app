@@ -36,7 +36,7 @@ const MineGrid: React.FC<MineGridProps> = ({ gridState }) => {
             case 'hidden':
             default:
                 // This creates the dark, indented circle inside the hidden cells
-                return <div className="w-6 h-6 bg-[#2a2f58] rounded-full shadow-[inset_0_2px_3px_rgba(0,0,0,0.6)]"></div>;
+                return <div className="w-10 h-10 bg-[#2a2f58] rounded-full shadow-[inset_0_2px_3px_rgba(0,0,0,0.6)]"></div>;
         }
     };
 

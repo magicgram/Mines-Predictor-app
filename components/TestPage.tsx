@@ -1,5 +1,7 @@
 
+
 import React, { useState } from 'react';
+import { useTranslations } from '../hooks/useTranslations';
 
 interface TestPageProps {
     onShowSetupGuide: () => void;
@@ -10,10 +12,11 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const { t } = useTranslations();
 
     const handleTest = async (params: Record<string, string>) => {
         if (!userId.trim()) {
-            setError('Please enter a User ID to test with.');
+            setError(t('testPage.errorUserId'));
             return;
         }
         setIsLoading(true);
@@ -31,9 +34,9 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                 throw new Error(data.message || `Request failed with status ${response.status}`);
             }
 
-            setResponseMessage(`✅ Success! Server responded:\n${JSON.stringify(data, null, 2)}`);
+            setResponseMessage(`✅ ${t('testPage.success')} ${JSON.stringify(data, null, 2)}`);
         } catch (err: any) {
-            setError(`❌ Error: ${err.message}`);
+            setError(`❌ ${t('testPage.error')} ${err.message}`);
         } finally {
             setIsLoading(false);
         }
@@ -43,15 +46,15 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
         <div className="w-full max-w-4xl mx-auto p-8 glassmorphic-card rounded-2xl shadow-2xl mb-8">
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold shimmer-text mb-2">
-                    Postback Testing Tool
+                    {t('testPage.title')}
                 </h2>
-                <p className="text-text-secondary">Simulate 1Win postbacks to verify your backend. After a deposit test, log in with the same User ID.</p>
+                <p className="text-text-secondary">{t('testPage.subtitle')}</p>
             </div>
 
 
             <div className="mb-6">
                 <label htmlFor="test-user-id" className="block text-sm font-medium text-text-secondary mb-2">
-                    User ID to Test
+                    {t('testPage.userIdLabel')}
                 </label>
                 <input
                     id="test-user-id"
@@ -69,28 +72,28 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                     disabled={isLoading}
                     className="btn btn-dark"
                 >
-                    Test Registration
+                    {t('testPage.testRegistration')}
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '10' })}
                     disabled={isLoading}
                     className="btn btn-dark"
                 >
-                    Test 1st Deposit ($10)
+                    {t('testPage.testFirstDeposit')}
                 </button>
                  <button
                     onClick={() => handleTest({ status: 'fdp', fdp_usd: '2' })}
                     disabled={isLoading}
                     className="btn btn-dark"
                 >
-                    Test Failed Deposit ($2)
+                    {t('testPage.testFailedDeposit')}
                 </button>
                 <button
                     onClick={() => handleTest({ status: 'dep', dep_sum_usd: '5' })}
                     disabled={isLoading}
                     className="btn btn-dark"
                 >
-                    Test Re-Deposit ($5)
+                    {t('testPage.testRedeposit')}
                 </button>
             </div>
             
@@ -101,7 +104,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                     </div>
                     <div className="relative flex justify-center">
                         <span className="bg-bg-secondary px-3 text-sm text-text-secondary rounded-full">
-                            Need Help?
+                            {t('testPage.needHelp')}
                         </span>
                     </div>
                 </div>
@@ -111,7 +114,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                     type="button"
                     className="w-full max-w-sm mx-auto btn btn-dark"
                 >
-                    Setup Guide
+                    {t('testPage.setupGuide')}
                 </button>
             </div>
 
@@ -119,7 +122,7 @@ const TestPage: React.FC<TestPageProps> = ({ onShowSetupGuide }) => {
                 {isLoading && (
                     <div className="flex items-center justify-center p-4">
                         <div className="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-accent-cyan"></div>
-                        <p className="ml-4 text-text-secondary">Sending test postback...</p>
+                        <p className="ml-4 text-text-secondary">{t('testPage.sending')}</p>
                     </div>
                 )}
                 {responseMessage && (

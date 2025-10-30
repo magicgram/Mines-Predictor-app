@@ -3,9 +3,10 @@ import React from 'react';
 import type { User } from '../types';
 import CloseIcon from './icons/CloseIcon';
 import UserIcon from './icons/UserIcon';
-import GuideIcon from './icons/GuideIcon';
 import TestIcon from './icons/TestIcon';
 import DashboardIcon from './icons/DashboardIcon';
+import LanguageIcon from './icons/LanguageIcon';
+import { useTranslations } from '../hooks/useTranslations';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -13,6 +14,7 @@ interface SidebarProps {
     onShowTestPage: () => void;
     onShowDashboard: () => void;
     onProfilePictureChange: (url: string) => void;
+    onShowLanguageModal: () => void;
     user: User | null;
 }
 
@@ -27,7 +29,8 @@ const NavLink: React.FC<{ onClick: () => void; icon: React.ReactNode; text: stri
     </a>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onShowDashboard, user, onProfilePictureChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onShowDashboard, user, onProfilePictureChange, onShowLanguageModal }) => {
+    const { t } = useTranslations();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -89,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                         </label>
                         <div className="overflow-hidden">
                             <p className="font-bold text-base text-white font-['Orbitron'] tracking-wide truncate">
-                                {user ? `Player ${user.id}` : 'Welcome'}
+                                {user ? `${t('sidebar.player')} ${user.id}` : t('sidebar.welcome')}
                             </p>
                             <p className="text-xs shimmer-text">Mines Predictor Pro</p>
                         </div>
@@ -101,13 +104,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onShowTestPage, onSh
                            <NavLink 
                                 onClick={onShowDashboard}
                                 icon={<DashboardIcon className="h-6 w-6 text-gray-400 group-hover:text-accent-cyan transition-colors" />}
-                                text="Dashboard"
+                                text={t('sidebar.dashboard')}
                            />
                         )}
                         <NavLink 
                             onClick={onShowTestPage}
                             icon={<TestIcon className="h-6 w-6 text-gray-400 group-hover:text-accent-cyan transition-colors" />}
-                            text="Test Postback"
+                            text={t('sidebar.testPostback')}
+                        />
+                        <NavLink 
+                            onClick={onShowLanguageModal}
+                            icon={<LanguageIcon className="h-6 w-6 text-gray-400 group-hover:text-accent-cyan transition-colors" />}
+                            text={t('sidebar.languages')}
                         />
                     </nav>
                 </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslations } from '../hooks/useTranslations';
 
 interface PasswordModalProps {
     isOpen: boolean;
@@ -15,6 +16,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const modalRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslations();
 
     // Reset state when modal is closed
     useEffect(() => {
@@ -35,7 +37,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
         if (password === CORRECT_PASSWORD) {
             onSuccess();
         } else {
-            setError('Incorrect password. Please try again.');
+            setError(t('passwordModal.error'));
             setPassword(''); // Clear input on error
         }
     };
@@ -63,9 +65,9 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
             >
                 <div className="text-center">
                     <h2 id="password-modal-title" className="text-2xl font-bold text-white font-['Orbitron']">
-                        Admin Access
+                        {t('passwordModal.title')}
                     </h2>
-                    <p className="text-text-secondary mt-2">Enter the password to access the test page.</p>
+                    <p className="text-text-secondary mt-2">{t('passwordModal.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -96,13 +98,13 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpen, onClose, onSucces
                             onClick={onClose}
                             className="w-full btn btn-dark"
                         >
-                            Cancel
+                            {t('passwordModal.cancel')}
                         </button>
                         <button
                             type="submit"
                             className="w-full btn btn-dark"
                         >
-                            Submit
+                            {t('passwordModal.submit')}
                         </button>
                     </div>
                 </form>

@@ -1,6 +1,8 @@
 
+
 import React, { useState, useEffect } from 'react';
 import CopyIcon from './icons/CopyIcon';
+import { useTranslations } from '../hooks/useTranslations';
 
 const Step: React.FC<{ number: number; title: string; children: React.ReactNode }> = ({ number, title, children }) => (
     <div className="flex items-start space-x-4">
@@ -17,6 +19,7 @@ const Step: React.FC<{ number: number; title: string; children: React.ReactNode 
 const URLBlock: React.FC = () => {
     const [postbackUrl, setPostbackUrl] = useState('');
     const [copied, setCopied] = useState(false);
+    const { t } = useTranslations();
 
     useEffect(() => {
         // This ensures the code only runs on the client-side where window is available.
@@ -37,9 +40,9 @@ const URLBlock: React.FC = () => {
                 1
             </div>
             <div className="flex-grow">
-                 <h3 className="text-lg font-semibold text-white">Your Postback URL</h3>
+                 <h3 className="text-lg font-semibold text-white">{t('postbackGuide.urlTitle')}</h3>
                 <div className="mt-2 flex items-center justify-between bg-black/40 p-2 pr-3 rounded-lg border border-white/20">
-                    <span className="font-mono text-sm text-yellow-300 break-all">{postbackUrl || 'Loading URL...'}</span>
+                    <span className="font-mono text-sm text-yellow-300 break-all">{postbackUrl || t('postbackGuide.loadingUrl')}</span>
                     <button 
                         onClick={handleCopy}
                         className="p-2 ml-2 rounded-md hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent-cyan flex-shrink-0"
@@ -47,7 +50,7 @@ const URLBlock: React.FC = () => {
                         disabled={!postbackUrl}
                     >
                         {copied ? (
-                           <span className="text-green-400 text-xs font-semibold">Copied!</span>
+                           <span className="text-green-400 text-xs font-semibold">{t('common.copied')}</span>
                         ) : (
                            <CopyIcon className="h-5 w-5 text-gray-400" />
                         )}
@@ -59,28 +62,30 @@ const URLBlock: React.FC = () => {
 };
 
 const SetupGuide: React.FC = () => {
+    const { t } = useTranslations();
+
     return (
         <div className="w-full max-w-2xl mx-auto p-8 glassmorphic-card gradient-border rounded-2xl shadow-2xl mb-8">
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold shimmer-text mb-2">
-                    Postback Setup Guide
+                    {t('postbackGuide.title')}
                 </h2>
-                <p className="text-text-secondary">Connect your affiliate platform to the app.</p>
+                <p className="text-text-secondary">{t('postbackGuide.subtitle')}</p>
             </div>
             
             <div className="space-y-6">
                 <URLBlock />
-                <Step number={2} title="Configure in Affiliate Panel">
-                    Log in to your affiliate dashboard (e.g., 1Win Partners) and find the 'Postback' or 'S2S Integration' section.
+                <Step number={2} title={t('postbackGuide.step2Title')}>
+                    {t('postbackGuide.step2Desc')}
                 </Step>
-                <Step number={3} title="Paste the URL">
-                    Paste the URL from Step 1 into the postback field. Some platforms may have separate fields for different events.
+                <Step number={3} title={t('postbackGuide.step3Title')}>
+                    {t('postbackGuide.step3Desc')}
                 </Step>
-                <Step number={4} title="Required Parameters">
-                   Ensure your platform sends: <code>user_id</code>, <code>status</code> ('registration', 'fdp', 'dep'), <code>fdp_usd</code>, and <code>dep_sum_usd</code>.
+                <Step number={4} title={t('postbackGuide.step4Title')}>
+                   {t('postbackGuide.step4Desc')}
                 </Step>
-                <Step number={5} title="Test Your Setup">
-                    Use the Postback Testing Tool to simulate events and confirm your backend is working. After a test deposit, try logging in with the same User ID.
+                <Step number={5} title={t('postbackGuide.step5Title')}>
+                    {t('postbackGuide.step5Desc')}
                 </Step>
             </div>
         </div>

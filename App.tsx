@@ -10,13 +10,15 @@ import { verificationService } from './services/verificationService';
 import type { User } from './types';
 import MenuIcon from './components/icons/MenuIcon';
 import LogoutIcon from './components/icons/LogoutIcon';
+import { LanguageProvider } from './context/LanguageContext';
+import { useTranslations } from './hooks/useTranslations';
+import LanguageModal from './components/LanguageModal';
 
 // Local storage keys
 const ACTIVE_USER_KEY = 'minesPredictorActiveUser';
 const USER_DATA_KEY_PREFIX = 'minesPredictorUser:';
 
-
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -24,7 +26,9 @@ const App: React.FC = () => {
     const [activeGuide, setActiveGuide] = useState<string | null>(null); // 'access', 'setup', or null
     const [showTestPage, setShowTestPage] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false); // State for password modal
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false);
+    const [isLanguageModalOpen, setIsLanguageModalOpen] = useState<boolean>(false);
+    const { t } = useTranslations();
 
     
     // State to track login attempts from localStorage
@@ -51,7 +55,7 @@ const App: React.FC = () => {
                         const updatedUser = { ...parsedUser, predictionCount: 0, awaitingDeposit: false, knownRedeposits: result.newRedepositCount };
                         localStorage.setItem(`${USER_DATA_KEY_PREFIX}${updatedUser.id}`, JSON.stringify(updatedUser));
                         setUser(updatedUser);
-                        alert("Deposit successful! You have 15 new predictions.");
+                        alert(t('alert.depositSuccess'));
                     } else {
                         setUser(parsedUser);
                     }
@@ -61,7 +65,7 @@ const App: React.FC = () => {
             }
         }
         setIsLoading(false);
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         loadUserFromStorage();
@@ -91,7 +95,7 @@ const App: React.FC = () => {
                         awaitingDeposit: false, 
                         knownRedeposits: apiRedepositCount 
                     };
-                    alert("New deposit confirmed! Your prediction count has been reset.");
+                    alert(t('alert.newDepositConfirmed'));
                 } else {
                     // No new deposit, just logging in again. Preserve prediction count.
                     userToActivate = {
@@ -135,11 +139,9 @@ const App: React.FC = () => {
                 localStorage.setItem('loginAttempts', JSON.stringify(updatedAttempts));
 
                 if (newCount < 3) {
-                    // For attempts 1 and 2, show the "Not Registered" message.
-                    setError("Sorry, You are Not Registered!\nPlease click the REGISTER button first and complete your registration using Register Here Button.");
+                    setError("error.notRegistered");
                 } else {
-                    // For the 3rd attempt and onwards, suggest waiting.
-                    setError("No registration found yet!\nPlease wait 2-5 minutes after registration and enter your Player ID again.");
+                    setError("error.notFoundYet");
                 }
             } else if (result.message && result.message.includes('successfully completed registration')) {
                 setInfoMessage(result.message);
@@ -202,6 +204,11 @@ const App: React.FC = () => {
         setShowTestPage(false);
         setIsMenuOpen(false);
     };
+
+    const handleShowLanguageModal = () => {
+        setIsMenuOpen(false);
+        setIsLanguageModalOpen(true);
+    }
     
     if (isLoading && !user) { // Only show full-screen loader on initial load
         return (
@@ -237,12 +244,17 @@ const App: React.FC = () => {
                 onClose={() => setIsPasswordModalOpen(false)}
                 onSuccess={handlePasswordSuccess}
             />
+            <LanguageModal
+                isOpen={isLanguageModalOpen}
+                onClose={() => setIsLanguageModalOpen(false)}
+            />
             <Sidebar
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
                 onShowTestPage={handleShowTestPage}
                 onShowDashboard={handleShowDashboard}
                 onProfilePictureChange={handleProfilePictureChange}
+                onShowLanguageModal={handleShowLanguageModal}
                 user={user}
             />
             {/* Header updated to use CSS Grid for better responsiveness on mobile */}
@@ -282,14 +294,14 @@ const App: React.FC = () => {
                                 onClick={handleHideGuide}
                                 className="btn btn-dark text-sm"
                             >
-                                Hide
+                                {t('header.hide')}
                             </button>
                          ) : (
                             <button
                                 onClick={handleShowAccessGuide}
                                 className="btn btn-guide text-sm"
                             >
-                                Guide
+                                {t('header.guide')}
                             </button>
                          )
                     )}
@@ -302,5 +314,13 @@ const App: React.FC = () => {
         </div>
     );
 };
+
+
+const App: React.FC = () => (
+    <LanguageProvider>
+        <AppContent />
+    </LanguageProvider>
+);
+
 
 export default App;

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import LoginPage from './components/LoginPage';
 import PredictorPage from './components/PredictorPage';
@@ -10,6 +9,7 @@ import PasswordModal from './components/PasswordModal';
 import { verificationService } from './services/verificationService';
 import type { User } from './types';
 import MenuIcon from './components/icons/MenuIcon';
+import LogoutIcon from './components/icons/LogoutIcon';
 
 // Local storage keys
 const ACTIVE_USER_KEY = 'minesPredictorActiveUser';
@@ -271,9 +271,10 @@ const App: React.FC = () => {
                     {user ? (
                         <button
                             onClick={handleLogout}
-                            className="btn btn-dark text-sm"
+                            className="btn btn-dark p-3"
+                            aria-label="Logout"
                         >
-                            Logout
+                            <LogoutIcon className="h-6 w-6" />
                         </button>
                     ) : (
                          isGuideVisible ? (

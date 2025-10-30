@@ -288,7 +288,7 @@ const App: React.FC = () => {
                                 onClick={handleShowAccessGuide}
                                 className="btn btn-guide text-sm"
                             >
-                                Guide
+                                Mostbet
                             </button>
                          )
                     )}
